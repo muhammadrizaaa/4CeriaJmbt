@@ -1,9 +1,9 @@
 <x-app-layout>
     <body>
         <div class="px-4">
-        <form method="POST" action="{{ route('house.detail.create') }}" class="px-4 py-6 text-gray-800 dark:text-white">
+        <form method="POST" action="{{ route('house.detail.create', $id) }}" class="px-4 py-6 text-gray-800 dark:text-white">
             @csrf
-            @method('POST')
+            @method('PUT')
             <div class="mb-3">
             <label class="mb-2 block text-sm font-medium text-gray-900 dark:text-white" for="width">Width</label>
                 <input class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full

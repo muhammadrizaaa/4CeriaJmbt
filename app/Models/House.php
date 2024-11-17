@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class House extends Model
 {
@@ -13,17 +12,31 @@ class House extends Model
         'name',
         'price',
         'house_desc',
-        'id_user'
+        'width',
+        'length',
+        'br',
+        'ba',
+        'floors',
+        'coordinate',
+        'street_name',
+        'kelurahan',
+        'kecamatan',
+        'kab_kota',
+        'province',
+        'postal_code',
+        'id_user',
+        
     ];
 
-    public $timestamps = false;
+    public $timestamps = true;
+
+    public function room(){
+        return $this->hasMany(Room::class, 'id_house');
+    }
+    public function housePic(){
+        return $this->hasMany(HousePic::class, 'id_house');
+    }
     public function user(){
         return $this->belongsTo(User::class, 'id_user');
-    }
-    public function houseAddress(){
-        return $this->hasOne(HouseAddress::class, 'id_house');
-    }
-    public function detailHouse(){
-        return $this->hasOne(DetailHouse::class, 'id_house');
     }
 }

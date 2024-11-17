@@ -1,9 +1,9 @@
 <x-app-layout>
     <body>
         <div class="px-4">
-            <form method="POST" action="{{route('house.address.create')}}">
+            <form method="POST" action="{{route('house.address.create', $id)}}">
                 @csrf
-                @method('POST')
+                @method('PATCH')
                 <div class="px-4 py-1 flex flex-row">
                     <div class="w-3/5 flex flex-col">
                         <div class="content-center pt-2 px-4 mr-4 flex flex-row items-center space-x-2">
@@ -81,7 +81,7 @@
         mapboxgl.accessToken = 'pk.eyJ1Ijoicml6YXJhYmIiLCJhIjoiY20zYjVja2J2MW44MDJtczJuYmg1aXV1bCJ9.eBrkXkRMbiBWXkjX6Rtvbw';
         var map = new mapboxgl.Map({
             container: 'map',
-            style: 'mapbox://styles/mapbox/streets-v11',
+            style: 'mapbox://styles/mapbox/dark-v11',
             center: [106.82767329965759, -6.185708854733704],
             zoom: 8
         });

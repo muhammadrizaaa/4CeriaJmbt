@@ -4,20 +4,19 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
-class DetailHouse extends Model
+class HousePic extends Model
 {
-    protected $table = 'detail_house';
-
+    protected $table = "house_pic";
     protected $fillable = [
-        'width',
-        'length',
-        'ba',
-        'br',
-        'floors',
+        "file_name",
+        "dir",
+        "size",
         'id_house'
     ];
+
 
     public function house(){
         return $this->belongsTo(House::class, 'id_house');
     }
+
 }
