@@ -1,0 +1,486 @@
+* {
+    font-family: "Plus Jakarta Sans";
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    background-color: #ffffff;
+    max-width: 100%;
+}
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25) ;
+}
+.kiriNavbar {
+    display: flex;
+}
+.kiriNavbar img {
+    width: auto;
+    width: 50px;
+    height: 50px;
+    margin-left: 12px;
+    margin-right: 42px;
+}
+.navbar .logossxx {
+    width: auto;
+    width: 50px;
+    height: 50px;
+    margin-left: 10px;
+    margin-right: 34px;
+}
+.fotoAtas img {
+    border-radius: 20px;
+   
+}
+.navbar ul {
+    display: flex;
+    
+    align-items: center;
+    gap: 20px;
+}
+.navbar ul li {
+    list-style: none
+}
+.navbar ul li a {
+    text-decoration: none;
+    color: #0f172a;
+    font-size: 14px;
+    transition: 0.3s ease;
+    
+}
+.navbar ul li:hover a{
+    color: white;
+    background-color: #fd1d1d;
+    padding: 4px 6px;
+    border-radius: 10px;
+}
+.navbar ul li:last-child a {
+    margin: 0;
+}
+.dalem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.header {
+    width: 100%;
+    height: 60vh;
+    background-color: #fa3636;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25) ;
+    display: flex;
+    align-items: center;
+ }
+ .isiHeader {
+    display: flex;
+    margin-left: 8%;
+ }
+ .kalimat {
+     color: white;
+     z-index: 2;
+     line-height: 1.2
+ }
+ .kalimat p {
+     color: #fff;
+     margin-top: 2%;
+     line-height: 1.9;
+     letter-spacing: 0.5px;
+     flex-wrap: wrap;
+     max-width: 40%;
+     font-size: 15px;
+     animation: text-color 30s infinite ease-in-out;
+     animation-delay: 0s;
+ }
+ .kalimat h2 {
+     font-size: 20px;
+ }
+ .kalimat h1 {
+   font-size: 30px;
+ }
+ .kalimat h2 span {
+     color: white;
+    font-size: 45px;
+    text-shadow: 0 0 6px white;
+ }
+ /* CSS untuk dropdown content */
+ .profile {
+    display: flex;
+    gap: 5px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    color: white;
+    background-color: #fd1d1d;
+    border: 1px solid white;
+    align-items: center;
+ }
+ .profile img {
+    width: 20px;
+    height: 20px;
+ }
+
+.dropdown button {
+    outline: none;
+    border: none;
+    background: none;
+    color: white;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    padding: 10px 0;
+    background-color: white;
+    width: 160px; /* Lebar dropdown mengikuti lebar tombol dropdown */
+    right: 0; /* Geser dropdown ke kiri */
+    border-radius: 0 0 20px 20px; 
+    animation: fadeInDrop 0.5s ease forwards;
+}
+
+@keyframes fadeInDrop {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.dropdown-content ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Pusatkan item dalam ul */
+    padding: 0; /* Hapus padding default ul */
+    list-style: none; /* Hapus bullet points */
+}
+
+.dropdown-content ul li {
+    margin: 0;
+}
+
+.dropdown-content ul li a {
+    color: #fd1d1d;
+    margin: 0;
+    text-decoration: none;
+    padding: 8px 0;
+    width: 100%; 
+    text-align: center; 
+}
+
+.dropdown-content ul li a:hover {
+    background-color: #fd1d1d;
+}
+.dropdown:hover .dropdown-content, .dropdown:focus .dropdown-content {
+    display: block;
+}
+.content {
+   max-width: 100%;
+   margin-top: 2%;
+
+}
+.jr{
+  width: 100%;
+  margin: 3% 0 3% 0;
+}
+.isidatabase {
+    display: flex;
+    max-width: 100%;
+    gap: 10px;
+    margin-bottom: 30px;
+    justify-content: center;
+}
+.jejeran {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: 90%;
+    gap: 3%;
+    margin: auto;
+
+}
+a {
+    text-decoration: none;
+    border-radius: 10px;
+    max-width: 30%;
+}
+.pilihan {
+    padding: 6px;
+    display: flex;
+    background-color: #f1f1f1;
+    box-shadow: 10px 10px 15px rgba(0, 0, 0, 0.25) ;
+    transition: 0.5s ease-in-out;
+    cursor: pointer;
+    border-radius: 20px;
+    gap: 10px;
+   
+}
+.pilihan:hover {
+    background-color: #fd1d1d;
+    box-shadow: 30px 30px 122px rgba(255, 0, 0, 0.4) ;
+   
+}
+.pilihan:hover .isipilihan ul li p, .pilihan:hover h2, .pilihan:hover span {
+    color: white;
+}
+.pilihan img {
+    width: 50%;
+   height: auto;
+    object-fit: cover;
+    border-radius: 20px;
+}
+.isipilihan {
+   transition: 0.5s ease-in-out;
+   margin: auto;
+   text-align: center;
+}
+.isipilihan .logox .ruang {
+   display: flex;
+   align-items: center;
+   gap: 5px;
+}
+.logox .ruang img{
+    width: 20px;
+    height: 20px;
+    transition: 0.5s ease-in-out;
+}
+.pilihan:hover .logox img {
+    background-color: white;
+   
+}
+.isipilihan ul li {
+   list-style: none;
+   font-size: 10px;
+   color: #0f172a;
+}
+.isipilihan ul li ul li{
+   margin-bottom: 5px;
+   
+}
+.isipilihan ul li P{
+   color: #fd1d1d;
+   transition: 0.5s ease-in-out;
+}
+
+.isipilihan ul li span {
+    font-size: 15px;
+    color: #0f172a;
+    transition: 0.5s ease-in-out;
+   }
+.isipilihan h2 {
+    font-size: 15px;
+    color: #0f172a;
+    letter-spacing: 0.8px;
+    transition: 0.5s ease-in-out;
+    margin-bottom: 5px;
+    margin-top: 15px;
+
+}
+.isipilihan button {
+    background-color: #fa3636;
+    color: #fff;
+    border: 1px solid white;
+    border-radius: 5px;
+    padding: 5px;
+    transition: 0.3s ease;
+}
+.isipilihan button:hover {
+    background-color: white;
+    color: #fd1d1d;
+    padding: 7px;
+}
+.box{
+    width: 35%;
+    background-color: #fff;
+    padding: 8px;
+    border-radius: 100px;
+    box-shadow: 0px 10px 30px -15px #000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: auto;
+    margin-bottom: 3%;
+}
+.box ul{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.box ul li{
+    list-style: none;
+    margin: 0px 10px;
+    border-radius: 100px;
+    text-align: center;
+}
+.box ul li a{
+    font-size: 10px;
+    padding: 8px 15px;
+    text-decoration: none;
+    color: #000;
+    display: block;
+    border-radius: 10px;
+    transition: 0.2s ease;
+    align-items: center;
+    justify-content: center;
+}
+.box ul li .active_page{
+    background-color: #fd1d1d;
+    color: #fff;
+}
+.box ul li:hover,
+.box button a:hover{
+    background-color: #fd1d1d;
+}
+.box ul li:hover a,
+.box button a:hover{
+    color: #fff;
+}
+
+/* ---------- Buttons ---------- */
+.box button{
+    font-size: 11px;
+    font-weight: bold;
+    background-color: #f1f1f1;
+    border: none;
+    cursor: pointer;
+    border-radius: 100px;
+    overflow: hidden;
+
+}
+.box button a{
+    text-decoration: none;
+    padding: 6px 30px;
+    display: block;
+    color: #000;
+    transition: 0.2s;
+}
+footer {
+    width: 100%;
+    background: linear-gradient(to right, #9F2A2A, red);
+    color: #fff;
+    padding: 10px 0 10px;
+    border-top-left-radius: 125px;
+    font-size: 10px;
+   
+}
+.row {
+    width: 85%;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.col {
+    flex-basis: 25%;
+    padding: 10px;
+}
+.col:nth-child(2), .col:nth-child(3) {
+    flex-basis: 15%;
+}
+.logo {
+    width: 50px;
+}
+.col h3 {
+    width: fit-content;
+    position: relative;
+    margin-bottom: 10px;
+}
+.email-id {
+    width: fit-content;
+    border-bottom: 1px solid white;
+    margin: 20px 0;
+}
+.col ul li {
+    list-style: none;
+}
+.col ul li a {
+    text-decoration: none;
+    color: #fff;
+}
+.foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid white;
+    gap: 7px;
+    padding-bottom: 10px;
+}
+.foot .email {
+    font-size: 10px;
+  
+}
+
+
+
+.foot input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    background: white;
+    color: #9F2A2A;
+    border: 0;
+    outline: none;
+    font-size: 10px;
+}
+.foot button {
+    background: transparent;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+}
+.foot button .panah {
+    color: white;
+
+}
+.socialIcon .fa-brands, .fa-solid {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 10px;
+    color: #000;
+    background: #fff;
+    margin-right: px;
+    cursor: pointer;
+}
+hr {
+    width: 90%;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    margin: 20px auto;
+}
+.copyright {
+    text-align: center;
+}
+.underline {
+    width: 100%;
+    height: 2px;
+    background: black;
+    border-radius: 3;
+    position: absolute;
+    left: 0;
+    overflow: hidden;
+}
+.underline span {
+    width: 15px;
+    height: 100%;
+    background: #fff;
+    border-radius: 3px;
+    position: absolute;
+    top: 0;
+    left: 10px;
+    animation: moving 2s linear infinite;
+}
+@keyframes moving {
+    0% {
+        left: -20px;
+    }
+    100% {
+        left: 100%;
+    }
+}

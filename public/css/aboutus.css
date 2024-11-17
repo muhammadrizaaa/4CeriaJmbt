@@ -1,0 +1,511 @@
+*{
+    font-family: "Plus Jakarta Sans";
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    line-height: 1.2;
+}
+html {
+    scroll-behavior: smooth;
+}
+.navbarr {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25) ;
+}
+.navbarr .daffa {
+    width: auto;
+    width: 50px;
+    height: 50px;
+    margin-left: 12px;
+    margin-right: 42px;
+}
+.fotoAtas img {
+    border-radius: 20px;
+   
+}
+.kiriNavbar {
+    display: flex;
+}
+.navbarr ul {
+    display: flex;
+    margin-bottom: 0rem !important;
+    padding: 0 !important;
+    align-items: center;
+    gap: 30px;
+}
+.navbarr ul li {
+    list-style: none
+}
+.navbarr ul li a {
+    text-decoration: none;
+    color: #0f172a;
+    font-size: 14px;
+    transition: 0.3s ease;
+    
+}
+.navbarr ul li:hover a{
+    color: white;
+    background-color: #fd1d1d;
+    padding: 4px 6px;
+    border-radius: 10px;
+}
+.navbarr ul li:last-child a {
+    margin: 0;
+}
+.profile {
+    display: flex;
+    gap: 5px;
+    padding: 10px 12px;
+    border-radius: 10px;
+    color: white;
+    background-color: #fd1d1d;
+    border: 1px solid white;
+    align-items: center;
+ }
+ .profile img {
+    width: 20px;
+    height: 20px;
+ }
+ .dropdown {
+    position: relative; /* Tambahkan posisi relatif ke dropdown */
+}
+.dropdown button {
+    outline: none;
+    border: none;
+    background: none;
+    color: white;
+    font-size: 13.33px;
+}
+
+.dropdown-content {
+    display: none;
+    position: absolute;
+    z-index: 2;
+    padding: 10px 0;
+    background-color: white;
+    width: 160px; /* Lebar dropdown mengikuti lebar tombol dropdown */
+    right: 0; /* Geser dropdown ke kiri */
+    border-radius: 0 0 20px 20px; 
+    animation: fadeInDrop 0.5s ease forwards;
+}
+
+@keyframes fadeInDrop {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+/* Atur posisi dropdown-content secara horizontal */
+.dropdown-content ul {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Pusatkan item dalam ul */
+    padding: 0; /* Hapus padding default ul */
+    list-style: none; /* Hapus bullet points */
+}
+
+.dropdown-content ul li {
+    margin: 0;
+}
+
+.dropdown-content ul li a {
+    color: #fd1d1d;
+    margin: 0;
+    text-decoration: none;
+    padding: 8px 0; /* Sesuaikan padding untuk item a */
+    width: 100%; /* Agar link mengisi seluruh lebar */
+    text-align: center; /* Pusatkan teks secara horizontal */
+}
+
+.dropdown-content ul li a:hover {
+    background-color: #fd1d1d;
+}
+.dropdown:hover .dropdown-content, .dropdown:focus .dropdown-content {
+    display: block;
+}
+
+.dalem {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.header {
+    width: 100%;
+    height: 80vh;
+    background-color: #fa3636;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25) ;
+    align-items: center;
+   justify-content: center;
+   display: flex;
+   position: relative;
+ }
+ .isiHeader {
+    display: flex;
+   
+ }
+ .kalimat {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+        color: white;
+        z-index: 2;
+        line-height: 1.2
+    }
+ 
+ .kalimat p {
+     color: #fff;
+     margin-top: 2%;
+     line-height: 1.9;
+     letter-spacing: 0.5px;
+     flex-wrap: wrap;
+     max-width: 80%;
+     font-size: 15px;
+     animation: text-color 30s infinite ease-in-out;
+     animation-delay: 0s;
+ }
+ .kalimat h2 {
+     font-size: 20px;
+ }
+ .kalimat h1 {
+   font-size: 30px;
+ }
+ .kalimat h2 span {
+     color: white;
+    font-size: 45px;
+    text-shadow: 0 0 6px white;
+ }
+nav{
+    position: absolute;
+    width: 100%;
+    height: 6vw;
+    display: flex;
+    text-align: center;
+    margin-top: 3%;
+    border-bottom: 2px solid rgba(184, 18, 18, 0.423);
+    -webkit-background-clip: padding-box; /* for Safari */
+    background-clip: padding-box; /* Firefox 4+, Opera, Chrome */
+    position: sticky;
+    top: 0;
+    background-color: white;
+
+    z-index: 3;
+}
+
+nav ul{
+    position: relative;
+    display: flex;
+    justify-content: space-between;
+    width: 70%;
+    margin: auto;
+    z-index: 3;
+}
+
+nav ul li{
+    list-style-type: none;
+    z-index: 3;
+}
+
+.sticky{
+        position: fixed;   
+}
+
+nav ul li a{
+    color:#9F2A2A;
+    font-weight: 600;
+    transition: 0.3s ease;
+    position: relative;
+    z-index: 3;
+}
+
+nav ul li a:link{
+    text-decoration: none;
+}
+
+nav ul li a:visited{
+    text-decoration: underline;
+    
+}
+
+nav ul li a:hover{
+    text-decoration: none;
+    background-color:#9F2A2A ;
+    color: white;
+    padding: 7px;
+    border-radius: 10px;
+}
+
+nav li a:active{
+    text-decoration: underline;
+}
+
+
+.sticky + .isic {
+    padding-top: 60px;
+  }
+
+
+
+
+
+
+.headercontent{
+    position: relative;
+    border: 2px;
+    margin: auto;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
+    width: 70%;
+    height: 300px;
+    margin-top: 100px;
+    border-radius: 8px;
+    background-color: white;
+}
+
+.isic{
+    align-content: center;
+}
+
+
+.isi{
+    text-align: center;
+    padding: 45px;
+    margin: auto;
+    color: #9F2A2A;
+    width: 40%;
+    margin-top: 20px;
+    margin-bottom: .5rem;
+}
+
+.isic .logogesya{
+    text-align: center;
+}
+
+.isi p{
+    padding-top: 20px;
+    font-size: 18px;
+}
+
+.kisah{
+    text-align: center;
+    padding: 70px;
+    margin: auto;
+   color: #9F2A2A;
+    width: 50%;
+    margin-top: 20px;
+}
+
+.kisah p{
+    padding-top: 20px;
+    font-size: 18px;
+}
+
+.kepemimpinan{
+    overflow: hidden;
+    width: 1000px;
+    max-width: 100%;
+    min-height: 1000px;
+    text-align: center;
+    margin: auto;
+}
+
+
+.kepemimpinan .Header{
+    text-align: center;
+    color: #9F2A2A;
+}
+
+.kepemimpinan .teks{
+    padding-top: 20px;
+    float: left;
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 75% ;
+}
+h1 {
+    font-size: 37px;
+    font-weight: 500;
+}
+h2 {
+    font-size: 30.3px;
+    font-weight: 500;
+}
+h1, h2, h3 {
+    margin-bottom: .5rem;
+}
+p {
+    margin-top: 0;
+    margin-bottom: 1rem;
+}
+.teks h1{
+    font-weight: 500;
+    text-align: left;
+    color: #9F2A2A;
+
+}
+
+.teks h3{
+    font-weight: 500;
+    text-align: left;
+    color: #9F2A2A;
+    opacity: 0.5;
+    padding-top: 2px;
+}
+
+.teks p{
+    text-align: left;
+}
+
+.kepemimpinan .PP{
+    float: right;
+}
+
+.kepemimpinan .PP img{
+    width: 200px;
+    border-radius: 50%;
+    margin-right: 20px;
+    margin-top: 10px;
+}
+
+.isikepemimpinan{
+    position: relative;
+    overflow: hidden;
+    width: 1000px;
+    max-width: 100%;
+    min-height: 225px;
+    text-align: center;
+    margin: auto;
+    margin-top: 15px;
+}
+footer {
+    width: 100%;
+    background: linear-gradient(to right, #9F2A2A, red);
+    color: #fff;
+    padding: 10px 0 10px;
+    border-top-left-radius: 125px;
+    font-size: 10px !important;
+   
+}
+.row {
+    width: 85%;
+    margin: auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    justify-content: space-between;
+}
+.col {
+    flex-basis: 25%;
+    padding: 10px;
+}
+.col:nth-child(2), .col:nth-child(3) {
+    flex-basis: 15%;
+}
+.logos {
+    width: 50px;
+}
+.col h3 {
+    font-size: 11.7px !important;
+    width: fit-content;
+    position: relative;
+    margin-bottom: 10px;
+}
+.email-id {
+    width: fit-content;
+    border-bottom: 1px solid white;
+    margin: 20px 0;
+}
+.col ul li {
+    list-style: none;
+}
+.col ul li a {
+    text-decoration: none;
+    color: #fff;
+}
+.foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid white;
+    gap: 7px;
+    padding-bottom: 10px;
+}
+.foot .email {
+    font-size: 10px !important;
+  
+}
+.foot input {
+    width: 100%;
+    padding: 8px;
+    border-radius: 8px;
+    background: white;
+    color: #9F2A2A;
+    border: 0;
+    outline: none;
+    font-size: 10px !important;
+}
+.foot button {
+    background: transparent;
+    border: 0;
+    outline: none;
+    cursor: pointer;
+}
+.foot button .panah {
+    color: white;
+
+}
+.socialIcon .fa-brands, .fa-solid {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    text-align: center;
+    line-height: 40px;
+    font-size: 10px !important;
+    color: #000;
+    background: #fff;
+    margin-right: px;
+    cursor: pointer;
+}
+hr {
+    width: 90%;
+    border: 0;
+    border-bottom: 1px solid #ccc;
+    margin: 20px auto;
+}
+.copyright {
+    text-align: center;
+}
+.underline {
+    width: 100%;
+    height: 2px;
+    background: black;
+    border-radius: 3;
+    position: absolute;
+    left: 0;
+    overflow: hidden;
+}
+.underline span {
+    width: 15px;
+    height: 100%;
+    background: #fff;
+    border-radius: 3px;
+    position: absolute;
+    top: 0;
+    left: 10px;
+    animation: moving 2s linear infinite;
+}
+@keyframes moving {
+    0% {
+        left: -20px;
+    }
+    100% {
+        left: 100%;
+    }
+}

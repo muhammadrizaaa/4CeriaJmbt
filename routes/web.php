@@ -4,6 +4,11 @@ use App\Http\Controllers\HouseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ProfilController;
+
+Route::get('/profil', [ProfilController::class, 'index'])->name('home');
+Route::get('/update-profile', [ProfilController::class, 'update'])->name('updateProfile');
+
 
 Route::get('/', function () {
     return view('welcome');
