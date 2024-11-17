@@ -40,6 +40,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/create_house', [HouseController::class, 'createHouse'])->name('house.create');
     Route::post('/editHouse', [HouseController::class, 'editHouse'])->name('house.edit');
 
+    
 });
 
 
