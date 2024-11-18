@@ -113,7 +113,15 @@
         .tab-content.active {
             display: block;
         }
-        
+        .profile-image {
+    width: 150px; /* Sesuaikan dengan kebutuhan */
+    height: 150px; /* Sesuaikan dengan kebutuhan */
+    object-fit: cover; /* Mengatur agar gambar tidak terdistorsi */
+    border-radius: 50%; /* Membuat gambar berbentuk lingkaran */
+    border: 2px solid #ddd; /* Tambahkan border jika diinginkan */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Tambahkan efek bayangan */
+}
+
         
             </style>
     <title>Document</title>
@@ -138,7 +146,18 @@
     
     <div id="profile" class="tab-content active">
         <h3 class="sambutan">Welcome, {{ $user->username }}</h3>
+
+        <div class="atasboss">
+             <img src="{{asset('assets/davin.profile.jpg')}}" alt="" class="profile-image">   
+            <div class="nameemail">
+                <h3 class="namanyadisini">{{ $user->username }}</h3>
+                <h3 class="emailinimah">{{ $user->email }}</h3>
+                <button type="button" id="editButton" class="btn" onclick="enableEdit()">Edit Profile</button>
+            </div>
+            <div class="tomboltombol">
     
+            </div>
+        </div>
         <form action="{{ route('updateProfile') }}" method="POST">
             @csrf
             <div class="container">
@@ -180,7 +199,6 @@
                     </div>
     
                     <div class="bawah">
-                        <button type="button" id="editButton" class="btn" onclick="enableEdit()">Edit Profile</button>
                         <input type="submit" value="Update Profile" class="btn">
                     </div>
                 </div>
