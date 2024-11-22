@@ -11,30 +11,44 @@ Route::get('/', function () {
 
 Route::get('/dashboard', [HouseController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
 
+Route::middleware(['permission:house-view'])->group(function(){
+    Route::get('/houses_list', [HouseController::class, 'displayAll'])->name('houses-list');
+});
+Route::middleware(['permission:user-view|user-edit'])->group(function(){
+        //users
+        Route::get('/users_list', [UserController::class, 'display'])->name('users.list');
+        Route::get('/user_edit_form/{id}', [UserController::class, 'formEdit'])->name('user.edit.form');
+        Route::put('/user-edit/{id}', [UserController::class, 'editUser'])->name('user.edit');
+});
+
 Route::middleware('auth')->group(function () {
+
+    Route::get('/house/view/{id}', [HouseController::class, 'viewHouse'])->name('house.view');
+
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
-    //users
-    Route::get('/users_list', [UserController::class, 'display'])->name('users.list');
-    Route::get('/user_edit_form/{id}', [UserController::class, 'formEdit'])->name('user.edit.form');
-    Route::put('/user-edit/{id}', [UserController::class, 'editUser'])->name('user.edit');
+
 
     //houses
-    Route::get('/houses_list', [HouseController::class, 'displayAll'])->name('houses-list');
+    
     Route::get('/create_house_form', [HouseController::class, 'formCreateHouse'])->name('house.create.form');
     Route::post('/create_house', [HouseController::class, 'createHouse'])->name('house.create');
     Route::get('/house_edit_form/{id}',[HouseController::class, 'formEditHouse'])->name('house.edit.form');
     Route::put('/house/edit/{id}', [HouseController::class, 'editHouse'])->name('house.edit');
+        //user
+        Route::get('/house/list', [HouseController::class, 'displayOwnedHouse'])->name('user-houses-list');
+        Route::delete('/house/delete/{id}', [HouseController::class, 'destroyHouse'])->name('user-house-delete');
 
     Route::get('/detail_house/{id}', [HouseController::class, 'displayDetail'])->name('house.detail');
-    Route::get('/create_house_detail_form/{id}', [HouseController::class, 'formCreateDetail'])->name('house.detail.create.form');
-    Route::put('/create_house_detail/{id}', [HouseController::class, 'createDetail'])->name('house.detail.create');
-    Route::put('/house/detail/edit/{id}', [HouseController::class, 'editDetail'])->name('house.detail.edit');
-    Route::put('/house/detail/delete/{id}', [HouseController::class, 'destroyDetail'])->name('house.detail.delete');
 
-    Route::get('/house/room/detail/{id}', [HouseController::class, 'displayRoomDetail'])->name('house.room.detail');
+    Route::get('/create_house_detail_form/{id}', [HouseController::class, 'formCreateDimension'])->name('house.detail.dimension.create.form');
+    Route::put('/create_house_detail/{id}', [HouseController::class, 'createDimension'])->name('house.detail.dimension.create');
+    Route::put('/house/detail/edit/{id}', [HouseController::class, 'editDimension'])->name('house.detail.dimension.edit');
+    Route::put('/house/detail/delete/{id}', [HouseController::class, 'destroyDimension'])->name('house.detail.dimension.delete');
+
+    Route::get('/house/{house}/room/detail/{id}', [HouseController::class, 'displayRoomDetail'])->name('house.room.detail');
     Route::put('/house/room/edit/{id}', [HouseController::class, 'editRoom'])->name('house.room.edit');
     Route::post('/house/room/create', [HouseController::class, 'createRoom'])->name('house.room.create');
     Route::post('/house/room/picUp/{id}',[HouseController::class, 'createRoomPic'])->name('house.room.pic.create');

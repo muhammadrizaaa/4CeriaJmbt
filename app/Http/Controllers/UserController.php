@@ -7,6 +7,9 @@ use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
+    // function __construct(){
+    // $this->middleware('permission:user-view|user-edit', ['only'=>['display', 'formEdit', 'editUser']]);
+    // }
     public function display(){
         $users = User::all();
         return view('users.users-list', compact('users'));

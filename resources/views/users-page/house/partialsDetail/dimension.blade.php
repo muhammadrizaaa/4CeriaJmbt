@@ -1,8 +1,5 @@
 <section>
-    <form method="POST" id="deleteDetailForm" action="{{route('house.detail.delete', $house->id)}}">
-        @csrf
-        @method('PUT')
-    </form>
+    
 
     <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
         <div class="px-4 py-1">
@@ -11,12 +8,12 @@
             </div>
             @if($house->width==null && $house->length==null && $house->br==null && $house->ba==null && $house->floors==null )
             <div class="px-4 py-4">
-                <a href="{{route('house.detail.create.form',$house->id)}}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300
+                <a href="{{route('house.detail.dimension.create.form',$house->id)}}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300
                 font-medium rounded-lg text-sm px-5 py-2.5 border border-gray-800 dark:border-gray-600 dark:bg-gray-600
                 dark:hover:bg-gray-800 focus:outline-none dark:focus:ring-blue-800 ">Add</a>
             </div>
             @else
-                <form method="POST" action="{{ route('house.detail.edit', $house->id) }}">
+                <form method="POST" action="{{ route('house.detail.dimension.edit', $house->id) }}">
                     @csrf
                     @method('PUT')
                     <div class="px-4 py-1 flex flex-row">
@@ -99,7 +96,7 @@
             <button id="cancelDimensionButton" class="py-2 px-4 bg-gray-300 hover:bg-gray-400 text-gray-700 rounded-md">
                 Cancel
             </button>
-            <form id="deleteDimensionForm" method="POST" action="{{route('house.detail.delete', $house->id)}}">
+            <form id="deleteDimensionForm" method="POST" action="{{route('house.detail.dimension.delete', $house->id)}}">
                 @csrf
                 @method('PUT')
                 <button type="submit" class="py-2 px-4 bg-red-600 hover:bg-red-700 text-white rounded-md">

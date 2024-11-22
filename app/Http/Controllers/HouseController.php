@@ -12,10 +12,13 @@ use DB;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Log;
 use Storage;
 
 class HouseController extends Controller
 {
+
+    //view/calling data
     public function dashboard(){
         // $houseList = House::where('id_user', '!=', Auth::id())->get();
         $houseList = House::with(['housePic' => function ($query){
@@ -24,9 +27,19 @@ class HouseController extends Controller
         // return $houseList;
         return view('dashboard', compact('houseList'));
     }
+    public function viewHouse($id){
+        $house = House::with('housePic')->select("*", DB::raw('CAST(created_at AS DATE) as uploadDate'))->find($id);
+        // return $house;
+        return view('users-page.house-view', compact('house'));
+    }
     public function displayAll(){
         $houses = House::with('user')->get();
         return view('house.houses-list', compact('houses'));
+    }
+    public function displayOwnedHouse(){
+        $houses = House::where('house.id_user', '=', Auth::id())->get();
+        // return $houses;
+        return view('users-page.house.house-list', compact('houses'));
     }
     public function formCreateHouse(){
         return view('house.house-create');
@@ -35,15 +48,26 @@ class HouseController extends Controller
 
         $house = House::with('housePic', 'room')->findOrFail($idHouse);
         $increment = 1;
-
-        // return $house;
-        return view('house.house-detail', compact('house', 'increment'));
+        if(Auth::id()==$house->id_user || Auth::user()->hasRole('admin')){
+            // return $house;
+            return view('users-page.house.house-detail', compact('house', 'increment'));
+        }
+        else{
+            return redirect()->route('dashboard');
+        }
+        
     }
     public function displayRoomDetail($id){
-        $room = Room::with('roomPic')->find($id);
-        // return $room;
-        return view('house.room-detail', compact('room'));
+        $room = Room::with('roomPic', 'house')->find($id);
+        if (Auth::id()==$room->house->id_user) {
+            // return $room;
+            return view('users-page.house.room-detail', compact('room'));
+        }
+        else{
+            return redirect()->route('dashboard');
+        }
     }
+    //house n shi
     public function createHouse(Request $request){
         $userId = Auth::id();
         $request->validate([
@@ -58,7 +82,7 @@ class HouseController extends Controller
             'house_desc'=>$request->house_desc,
             'id_user'=>$userId
         ]);
-        return redirect()->route('houses-list');
+        return redirect()->route('user-houses-list');
     }
     public function formEditHouse($id){
         $house = House::find($id);
@@ -80,19 +104,36 @@ class HouseController extends Controller
         return redirect()->route('house.detail', $id);
     }
 
-    public function destroyHouse(House $house){
+    public function destroyHouse(House $house, $id){
+        $house = House::with('housePic', 'room.roomPic', 'room')->findOrFail($id);
+        if($house->housePic->isNotEmpty()){
+            foreach ($house->housePic as $pic) {
+                $this->destroyHousePic($pic->id);
+            }
+        }
+        if($house->Room->isNotEmpty()){
+            foreach ($house->Room as $room) {
+                if($room->roomPic->isNotEmpty()){
+                    foreach ($room->roomPic as $roomPic) {
+                        $this->destroyRoomPic($roomPic->id);
+                    }
+                }
+                $room->delete();
+            }
+        }
         try {
             $house->delete();
-            return redirect()->route('houses-list');
+            return redirect()->route('user-houses-list');
         } catch (Exception $e) {
-            return redirect()->route('houses-list')->with('error', 'An error occured '.$e->getMessage());
+            return redirect()->route('user-houses-list')->with('error', 'An error occured '.$e->getMessage());
         }
     }
 
-    public function formCreateDetail($id){
-        return view('house.house-detail-create', compact('id'));
+    //house dimension configuration
+    public function formCreateDimension($id){
+        return view('users-page.house.house-detail-dimension-create', compact('id'));
     }
-    public function createDetail(Request $request, $id){
+    public function createDimension(Request $request, $id){
         $request->validate([
             'width'=>['required', 'numeric', 'max_digits:4'],
             'length'=>['required', 'numeric', 'max_digits:4'],
@@ -120,7 +161,7 @@ class HouseController extends Controller
 
     }
 
-    public function editDetail(Request $request, $id){
+    public function editDimension(Request $request, $id){
         $request->validate([
             'width'=>['required', 'numeric', 'max_digits:4'],
             'length'=>['required', 'numeric', 'max_digits:4'],
@@ -140,7 +181,7 @@ class HouseController extends Controller
         return redirect()->route('house.detail', $request->id_house);
     }
 
-    public function destroyDetail($id){
+    public function destroyDimension($id){
         $destroy = House::find($id);
         $destroy->width = null;
         $destroy->length = null;
@@ -151,8 +192,9 @@ class HouseController extends Controller
         return redirect()->route('house.detail', $id);
     }
 
+    //address of house shi
     public function formCreateAddress($id){
-        return view('house.house-address-create', compact('id'));
+        return view('users-page.house.house-address-create', compact('id'));
     }
 
 
@@ -187,6 +229,7 @@ class HouseController extends Controller
         return redirect()->route('house.detail', $id);
     }
 
+    //housing pictures
     public function createHousePic($id, Request $request){
         $request->validate([
             'house_pic' => ['required', 'file', 'max:2048', 'mimes:png,jpg,jpeg'],
@@ -216,6 +259,7 @@ class HouseController extends Controller
         return redirect()->route('house.detail',$housePic->id_house)->with('success', 'File succesfully deleted');
     }
 
+    //room of house config
     public function createRoom(Request $request){
         $request->validate([
             'name'=>['required', 'max:255', 'string'],
@@ -253,12 +297,22 @@ class HouseController extends Controller
         return redirect()->route('house.room.detail',$upRoom->id)->with('success', 'Succesfully Edit Room Data');
     }
 
+    public function destroyRoom(Room $room, $id){
+        $room = Room::with('roomPic')->findOrFail($id);
+        if($room->roomPic->isNotEmpty()){
+            foreach ($room->roomPic as $roomPic) {
+                $this->destroyRoomPic($roomPic->id);
+            }
+
+        }
+    }
+
     public function createRoomPic($id, Request $request){
         $request->validate([
             'room_pic' => ['required', 'file', 'max:2048', 'mimes:png,jpg,jpeg'],
         ]);
         if($request->hasFile('room_pic') && $request->file('room_pic')->isValid()){
-            $saveFolder = 'uploads/house/house_'.$request->id_house.'/rooms/'.$id;
+            $saveFolder = 'uploads/house/house_'.$request->id_house.'/rooms/_'.$id;
             $path = $request->file('room_pic')->store($saveFolder, 'public');
             RoomPic::create([
                 'file_name' => $request->file('room_pic')->getClientOriginalName(),
@@ -274,9 +328,12 @@ class HouseController extends Controller
     }
     public function destroyRoomPic($id){
         $roomPic = RoomPic::find($id);
-        if(Storage::exists($roomPic->dir)){
-            Storage::delete($roomPic->dir);
-        }
+        // $saveFolder = 'uploads/house/house_'.$id.'/rooms/_'.$id."/".$roomPic->if;
+        if (Storage::exists($roomPic->dir)) {
+                Storage::delete($roomPic->dir);
+                Log::info('Full file path: ' . storage_path('app/' . $roomPic->dir));
+            }
+
         $roomPic->delete();
         return redirect()->route('house.room.detail',$roomPic->id_room)->with('success', 'File succesfully deleted');
     }

@@ -63,7 +63,7 @@
     <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-80">
         <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200 text-center">Confirm Delete</h2>
         <p class="text-gray-600 dark:text-gray-400 text-sm text-center mt-2">
-            Are you sure you want to delete this item (ID: <span id="deleteItemId" class="font-bold"></span>)? This action cannot be undone.
+            Are you sure you want to delete this item? This action cannot be undone.
         </p>
         <div class="mt-4 flex justify-center gap-4">
             <button id="cancelAddressButton" class="py-2 px-4 bg-gray-300 hover:bg-gray-400 text-gray-700 rounded-md">
