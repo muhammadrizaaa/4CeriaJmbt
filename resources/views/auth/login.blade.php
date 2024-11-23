@@ -1,80 +1,235 @@
-<x-guest-layout>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{{ asset('css/LoginPage0.css') }}">
+    <style>
+        .error-text {
+            color: red;
+            font-size: 12px;
+            margin-top: 5px;
+        }
+    </style>
+    <title>Login or Register</title>
+</head>
+
 <body>
-    <!-- Judul Halaman -->
-    <h2 class="mt-10 text-center text-2xl font-bold tracking-tight text-gray-900">
-        Masuk 
-    </h2>
 
-    <!-- Form Login -->
-    <form id="login-form" class="space-y-6" action="#" method="POST" onsubmit="return validateForm()">
-        @csrf
+    <div class="container" id="container">
 
-        <!-- Input Email -->
-        <div>
-            <label for="email" class="block text-sm font-medium text-gray-900">
-                Alamat Email
-            </label>
-            <div class="mt-2">
-                <input 
-                    id="email" 
-                    name="email" 
-                    type="email" 
-                    autocomplete="email" 
-                    required 
-                    class="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm 
-                           ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm">
+        <!-- Sign Up Form -->
+        <div class="form-container sign-up">
+            <form id="registerForm" action="proses_register.php" method="POST" onsubmit="return validateRegisterForm(event)">
+                <h1>Daftarkan Diri Anda</h1>
+
+                <!-- Input Fields -->
+                 <div class="input-container">
+                     <input class="form-control" type="text" id="name" name="name" placeholder="Nama" onkeyup="validateName()">
+                     <span id="name-error" class="error-text"></span>
+                 </div>
+
+                <div class="input-container">
+                    <input class="form-control" type="text" id="Username" name="Username" placeholder="User Name" onkeyup="validateUsername()">
+                    <span id="username-error" class="error-text"></span>
+                </div>
+
+                <div class="input-container">
+                    <input class="form-control" type="text" id="email" name="email" placeholder="Email" onkeyup="validateEmail()">
+                    <span id="email-error" class="error-text"></span>
+                </div>
+
+                <div class="input-container">
+                    <input class="form-control" type="password" id="password1" name="password" placeholder="Kata Sandi" onkeyup="validatePassword()">
+                    <img id="togglePassword1" src="{{ asset('images/icons/hidden.png') }}" alt="eye icon">
+                    <span id="password-error" class="error-text"></span>
+                </div>
+
+                <div class="input-container">
+                    <input class="form-control" type="password" id="password2" name="password_confirmation" placeholder="Konfirmasi Kata Sandi" onkeyup="validatePasswordConfirm()">
+                    <img id="togglePassword2" src="{{ asset('images/icons/hidden.png') }}" alt="eye icon">
+                    <span id="passwordconfirm-error" class="error-text"></span>
+                </div>
+
+                <button type="submit" name="register" class="signup-button">Daftar</button>
+            </form>
+        </div>
+
+        <!-- Sign In Form -->
+        <div class="form-container sign-in">
+            <form action="proses_login.php" method="POST" onsubmit="return validateLoginForm(event)">
+                <h1>Masuk</h1>
+                <div class="input-container">
+                    <input class="form-control" type="text" name="username" placeholder="Email atau Username">
+                    <span id="username-error" class="error-text"></span>
+                </div>
+
+                <div class="input-container">
+                    <input class="form-control" type="password" name="password" placeholder="Password">
+                    <a href="forgot_password.php">Forget Your Password?</a>
+                </div>
+                
+                <button type="submit" name="login" class="daftar-button">Masuk</button>
+            </form>
+        </div>
+
+        <!-- Toggle Container -->
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h1>Daftar Akun</h1>
+                    <p>Sudah Punya Akun?, Klik Tombol Dibawah Ini!</p>
+                    <button onclick="showToast()" class="hidden" id="login">Log-In</button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1>Selamat datang!</h1>
+                    <p>Belum Punya Akun?, Klik Tombol Dibawah Ini!</p>
+                    <button class="hidden" id="register">Daftar</button>
+                </div>
             </div>
-            <p id="email-error" class="text-sm text-red-600 hidden">Masukkan alamat email yang valid.</p>
         </div>
+    </div>
 
-        <!-- Input Password -->
-        <div class = "password-container">
-            <label for="password" class="block text-sm font-medium text-gray-900">
-                Password
-            </label>
-            <div class="relative mt-2">
-                <input 
-                    id="password" 
-                    name="password" 
-                    type="password" 
-                    autocomplete="current-password" 
-                    required 
-                    class="block w-full rounded-md border-0 py-1.5 px-3 text-gray-900 shadow-sm 
-                        ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset sm:text-sm pr-10">
-                <button 
-                    type="button" 
-                    onclick="togglePasswordVisibility()" 
-                    class="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-gray-700">
-                    <img 
-                        src="/images/icons/eye.png" 
-                        alt="Show password" 
-                        id="password-icon" 
-                        class="h-5 w-5">
-                </button>
-            </div>
-                <a href="/forgot-password" class="forgot-password">
-                Lupa password?
-                </a>
-            <p id="password-error" class="text-sm text-red-600 hidden">Password harus memiliki minimal 8 karakter.</p>
-        </div>
+    <script>
+        const container = document.getElementById('container');
+const registerBtn = document.getElementById('register');
+const loginBtn = document.getElementById('login');
 
-        <!-- Tombol Masuk -->
-        <div>
-            <button 
-                type="submit" 
-                class="flex w-full justify-center rounded-md bg-[#9F2A2A] px-3 py-1.5 text-sm font-semibold text-white shadow-sm 
-                       hover:bg-[#9F2A2A] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2">
-                Masuk
-            </button>
-        </div>
-    </form>
+registerBtn.addEventListener('click', () => {
+    container.classList.add("active");
+});
 
-    <!-- Tautan Daftar -->
-    <p class="mt-10 text-center text-sm text-gray-500">
-        Belum punya akun?
-        <a href="/register" class="font-semibold text-[#9F2A2A] opacity-100 hover:opacity-45">
-            Daftar di sini
-        </a>
-    </p>
-</x-guest-layout>
+loginBtn.addEventListener('click', () => {
+    container.classList.remove("active");
+});
 
+// Script for password visibility toggle
+const togglePassword1 = document.getElementById('togglePassword1');
+const password1 = document.getElementById('password1');
+togglePassword1.addEventListener('click', () => {
+    const type = password1.type === "password" ? "text" : "password";
+    password1.type = type;
+    togglePassword1.src = type === "password" ? "images/icons/hidden.png" : "images/icons/eye.png";
+});
+
+const togglePassword2 = document.getElementById('togglePassword2');
+const password2 = document.getElementById('password2');
+togglePassword2.addEventListener('click', () => {
+    const type = password2.type === "password" ? "text" : "password";
+    password2.type = type;
+    togglePassword2.src = type === "password" ? "images/icons/hidden.png" : "images/icons/eye.png";
+});
+
+var nameError = document.getElementById('name-error');
+var usernameError = document.getElementById('username-error');
+var emailError = document.getElementById('email-error');
+var passwordError = document.getElementById('password-error');
+var passwordconfirmError = document.getElementById('passwordconfirm-error');
+
+// Validasi Name
+function validateName() {
+    var name = document.getElementById('name').value;
+    if (name.length == 0) {
+        nameError.innerHTML = 'Nama tidak boleh kosong!';
+    } else {
+        nameError.innerHTML = '';
+    }
+}
+
+// Validasi Username
+function validateUsername() {
+    var username = document.getElementById('Username').value;
+    if (username.length == 0) {
+        usernameError.innerHTML = 'Username tidak boleh kosong!';
+    } else {
+        usernameError.innerHTML = '';
+    }
+}
+
+// Validasi Email
+function validateEmail() {
+    var email = document.getElementById('email').value;
+    var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
+    if (email.length == 0) {
+        emailError.innerHTML = 'Email tidak boleh kosong!';
+    } else if (!emailPattern.test(email)) {
+        emailError.innerHTML = 'Email tidak valid!';
+    } else {
+        emailError.innerHTML = ''; // Bersihkan pesan error
+    }
+}
+
+
+
+// Validasi Password
+function validatePassword() {
+    var password = document.getElementById('password1').value;
+
+    if (password.length == 0) {
+        passwordError.innerHTML = 'Password tidak boleh kosong!';
+    } else if (password.length < 8) {
+        passwordError.innerHTML = 'Password minimal 8 karakter!';
+    } else {
+        passwordError.innerHTML = ''; // Bersihkan pesan error
+    }
+}
+
+
+// Validasi Konfirmasi Password
+function validatePasswordConfirm() {
+    var password1 = document.getElementById('password1').value;
+    var password2 = document.getElementById('password2').value;
+
+    if (password2.length == 0) {
+        passwordconfirmError.innerHTML = 'Konfirmasi password tidak boleh kosong!';
+    } else if (password1 !== password2) {
+        passwordconfirmError.innerHTML = 'Password dan konfirmasi tidak cocok!';
+    } else {
+        passwordconfirmError.innerHTML = ''; // Bersihkan pesan error
+    }
+}
+
+// Validasi Formulir Pendaftaran
+function validateRegisterForm(event) {
+    var valid = true;
+
+    validateName();
+    validateUsername();
+    validateEmail();
+    validatePassword();
+    validatePasswordConfirm();
+
+    // Jika ada error, batalkan pengiriman form
+    if (nameError.innerHTML || usernameError.innerHTML || emailError.innerHTML || passwordError.innerHTML || passwordconfirmError.innerHTML) {
+        valid = false;
+    }
+
+    // Jika ada error, form tidak akan disubmit
+    return valid;
+}
+
+// Validasi Login Form
+function validateLoginForm(event) {
+    var valid = true;
+
+    var username = document.getElementsByName('username')[0].value;
+    var password = document.getElementsByName('password')[0].value;
+
+    if (username.length == 0) {
+        alert('Username atau email tidak boleh kosong');
+        valid = false;
+    }
+
+    if (password.length == 0) {
+        alert('Password tidak boleh kosong');
+        valid = false;
+    }
+
+    return valid;
+} 
+    </script>
+</body>
+
+</html>
