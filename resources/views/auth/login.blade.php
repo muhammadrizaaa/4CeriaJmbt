@@ -16,39 +16,52 @@
 </head>
 
 <body>
-
     <div class="container" id="container">
-
         <!-- Sign Up Form -->
         <div class="form-container sign-up">
-            <form id="registerForm" action="proses_register.php" method="POST" onsubmit="return validateRegisterForm(event)">
+            <form id="registerForm" action="{{route('proses_register')}}" method="POST" onsubmit="return validateRegisterForm(event)">
+                @csrf
+                @method('POST')
                 <h1>Daftarkan Diri Anda</h1>
 
                 <!-- Input Fields -->
                  <div class="input-container">
                      <input class="form-control" type="text" id="name" name="name" placeholder="Nama" onkeyup="validateName()">
                      <span id="name-error" class="error-text"></span>
+                     @error('name')
+                        <span class="error-text">{{$message}}</span>
+                    @enderror
                  </div>
 
                 <div class="input-container">
-                    <input class="form-control" type="text" id="Username" name="Username" placeholder="User Name" onkeyup="validateUsername()">
+                    <input class="form-control" type="text" id="Username" name="username" placeholder="User Name" onkeyup="validateUsername()">
                     <span id="username-error" class="error-text"></span>
+                    @error('username')
+                        <span class="error-text">{{$message}}</span>
+                    @enderror
                 </div>
 
                 <div class="input-container">
                     <input class="form-control" type="text" id="email" name="email" placeholder="Email" onkeyup="validateEmail()">
                     <span id="email-error" class="error-text"></span>
+                    @error('email')
+                        <span class="error-text">{{$message}}</span>
+                    @enderror
                 </div>
 
                 <div class="input-container">
                     <input class="form-control" type="password" id="password1" name="password" placeholder="Kata Sandi" onkeyup="validatePassword()">
                     <img id="togglePassword1" src="{{ asset('images/icons/hidden.png') }}" alt="eye icon">
                     <span id="password-error" class="error-text"></span>
+                    @error('password')
+                        <span class="error-text">{{$message}}</span>
+                    @enderror
                 </div>
 
                 <div class="input-container">
                     <input class="form-control" type="password" id="password2" name="password_confirmation" placeholder="Konfirmasi Kata Sandi" onkeyup="validatePasswordConfirm()">
                     <img id="togglePassword2" src="{{ asset('images/icons/hidden.png') }}" alt="eye icon">
+                    
                     <span id="passwordconfirm-error" class="error-text"></span>
                 </div>
 
@@ -56,12 +69,14 @@
             </form>
         </div>
 
-        <!-- Sign In Form -->
+        <!-- Login Form -->
         <div class="form-container sign-in">
-            <form action="proses_login.php" method="POST" onsubmit="return validateLoginForm(event)">
+            <form action="{{route('login')}}" method="POST">
+                @csrf
+                @method('POST')
                 <h1>Masuk</h1>
                 <div class="input-container">
-                    <input class="form-control" type="text" name="username" placeholder="Email atau Username">
+                    <input class="form-control" type="text" name="login" id="login" placeholder="Email atau Username">
                     <span id="username-error" class="error-text"></span>
                 </div>
 
@@ -69,8 +84,10 @@
                     <input class="form-control" type="password" name="password" placeholder="Password">
                     <a href="forgot_password.php">Forget Your Password?</a>
                 </div>
-                
-                <button type="submit" name="login" class="daftar-button">Masuk</button>
+                @error('login')
+                        <span class="error-text">{{$message}}</span>
+                    @enderror
+                <button type="submit" name="" class="daftar-button">Masuk</button>
             </form>
         </div>
 
@@ -92,74 +109,74 @@
     </div>
 
     <script>
-        const container = document.getElementById('container');
-const registerBtn = document.getElementById('register');
-const loginBtn = document.getElementById('login');
+    const container = document.getElementById('container');
+    const registerBtn = document.getElementById('register');
+    const loginBtn = document.getElementById('login');
 
-registerBtn.addEventListener('click', () => {
-    container.classList.add("active");
-});
+    registerBtn.addEventListener('click', () => {
+        container.classList.add("active");
+    });
 
-loginBtn.addEventListener('click', () => {
-    container.classList.remove("active");
-});
+    loginBtn.addEventListener('click', () => {
+        container.classList.remove("active");
+    });
 
-// Script for password visibility toggle
-const togglePassword1 = document.getElementById('togglePassword1');
-const password1 = document.getElementById('password1');
-togglePassword1.addEventListener('click', () => {
-    const type = password1.type === "password" ? "text" : "password";
-    password1.type = type;
-    togglePassword1.src = type === "password" ? "images/icons/hidden.png" : "images/icons/eye.png";
-});
+    // Script for password visibility toggle
+    const togglePassword1 = document.getElementById('togglePassword1');
+    const password1 = document.getElementById('password1');
+    togglePassword1.addEventListener('click', () => {
+        const type = password1.type === "password" ? "text" : "password";
+        password1.type = type;
+        togglePassword1.src = type === "password" ? "images/icons/hidden.png" : "images/icons/eye.png";
+    });
 
-const togglePassword2 = document.getElementById('togglePassword2');
-const password2 = document.getElementById('password2');
-togglePassword2.addEventListener('click', () => {
-    const type = password2.type === "password" ? "text" : "password";
-    password2.type = type;
-    togglePassword2.src = type === "password" ? "images/icons/hidden.png" : "images/icons/eye.png";
-});
+    const togglePassword2 = document.getElementById('togglePassword2');
+    const password2 = document.getElementById('password2');
+    togglePassword2.addEventListener('click', () => {
+        const type = password2.type === "password" ? "text" : "password";
+        password2.type = type;
+        togglePassword2.src = type === "password" ? "images/icons/hidden.png" : "images/icons/eye.png";
+    });
 
-var nameError = document.getElementById('name-error');
-var usernameError = document.getElementById('username-error');
-var emailError = document.getElementById('email-error');
-var passwordError = document.getElementById('password-error');
-var passwordconfirmError = document.getElementById('passwordconfirm-error');
+    var nameError = document.getElementById('name-error');
+    var usernameError = document.getElementById('username-error');
+    var emailError = document.getElementById('email-error');
+    var passwordError = document.getElementById('password-error');
+    var passwordconfirmError = document.getElementById('passwordconfirm-error');
 
-// Validasi Name
-function validateName() {
-    var name = document.getElementById('name').value;
-    if (name.length == 0) {
-        nameError.innerHTML = 'Nama tidak boleh kosong!';
-    } else {
-        nameError.innerHTML = '';
+    // Validasi Name
+    function validateName() {
+        var name = document.getElementById('name').value;
+        if (name.length == 0) {
+            nameError.innerHTML = 'Nama tidak boleh kosong!';
+        } else {
+            nameError.innerHTML = '';
+        }
     }
-}
 
-// Validasi Username
-function validateUsername() {
-    var username = document.getElementById('Username').value;
-    if (username.length == 0) {
-        usernameError.innerHTML = 'Username tidak boleh kosong!';
-    } else {
-        usernameError.innerHTML = '';
+    // Validasi Username
+    function validateUsername() {
+        var username = document.getElementById('Username').value;
+        if (username.length == 0) {
+            usernameError.innerHTML = 'Username tidak boleh kosong!';
+        } else {
+            usernameError.innerHTML = '';
+        }
     }
-}
 
-// Validasi Email
-function validateEmail() {
-    var email = document.getElementById('email').value;
-    var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    // Validasi Email
+    function validateEmail() {
+        var email = document.getElementById('email').value;
+        var emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    if (email.length == 0) {
-        emailError.innerHTML = 'Email tidak boleh kosong!';
-    } else if (!emailPattern.test(email)) {
-        emailError.innerHTML = 'Email tidak valid!';
-    } else {
-        emailError.innerHTML = ''; // Bersihkan pesan error
+        if (email.length == 0) {
+            emailError.innerHTML = 'Email tidak boleh kosong!';
+        } else if (!emailPattern.test(email)) {
+            emailError.innerHTML = 'Email tidak valid!';
+        } else {
+            emailError.innerHTML = ''; // Bersihkan pesan error
+        }
     }
-}
 
 
 
@@ -211,24 +228,24 @@ function validateRegisterForm(event) {
 }
 
 // Validasi Login Form
-function validateLoginForm(event) {
-    var valid = true;
+// function validateLoginForm(event) {
+//     var valid = true;
 
-    var username = document.getElementsByName('username')[0].value;
-    var password = document.getElementsByName('password')[0].value;
+//     var username = document.getElementsByName('username')[0].value;
+//     var password = document.getElementsByName('password')[0].value;
 
-    if (username.length == 0) {
-        alert('Username atau email tidak boleh kosong');
-        valid = false;
-    }
+//     if (username.length == 0) {
+//         alert('Username atau email tidak boleh kosong');
+//         valid = false;
+//     }
 
-    if (password.length == 0) {
-        alert('Password tidak boleh kosong');
-        valid = false;
-    }
+//     if (password.length == 0) {
+//         alert('Password tidak boleh kosong');
+//         valid = false;
+//     }
 
-    return valid;
-} 
+//     return valid;
+// } 
     </script>
 </body>
 
