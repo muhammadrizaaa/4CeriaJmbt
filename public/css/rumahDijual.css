@@ -8,175 +8,12 @@ body {
     background-color: #ffffff;
     max-width: 100%;
 }
-.navbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25) ;
-}
-.kiriNavbar {
-    display: flex;
-}
-.kiriNavbar img {
-    width: auto;
-    width: 50px;
-    height: 50px;
-    margin-left: 12px;
-    margin-right: 42px;
-}
-.navbar .logossxx {
-    width: auto;
-    width: 50px;
-    height: 50px;
-    margin-left: 10px;
-    margin-right: 34px;
-}
-.fotoAtas img {
-    border-radius: 20px;
-   
-}
-.navbar ul {
-    display: flex;
-    
-    align-items: center;
-    gap: 20px;
-}
-.navbar ul li {
-    list-style: none
-}
-.navbar ul li a {
-    text-decoration: none;
-    color: #0f172a;
-    font-size: 14px;
-    transition: 0.3s ease;
-    
-}
-.navbar ul li:hover a{
-    color: white;
-    background-color: #fd1d1d;
-    padding: 4px 6px;
-    border-radius: 10px;
-}
-.navbar ul li:last-child a {
-    margin: 0;
-}
+
 .dalem {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-}
-.header {
-    width: 100%;
-    height: 60vh;
-    background-color: #fa3636;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.25) ;
-    display: flex;
-    align-items: center;
- }
- .isiHeader {
-    display: flex;
-    margin-left: 8%;
- }
- .kalimat {
-     color: white;
-     z-index: 2;
-     line-height: 1.2
- }
- .kalimat p {
-     color: #fff;
-     margin-top: 2%;
-     line-height: 1.9;
-     letter-spacing: 0.5px;
-     flex-wrap: wrap;
-     max-width: 40%;
-     font-size: 15px;
-     animation: text-color 30s infinite ease-in-out;
-     animation-delay: 0s;
- }
- .kalimat h2 {
-     font-size: 20px;
- }
- .kalimat h1 {
-   font-size: 30px;
- }
- .kalimat h2 span {
-     color: white;
-    font-size: 45px;
-    text-shadow: 0 0 6px white;
- }
- /* CSS untuk dropdown content */
- .profile {
-    display: flex;
-    gap: 5px;
-    padding: 10px 12px;
-    border-radius: 10px;
-    color: white;
-    background-color: #fd1d1d;
-    border: 1px solid white;
-    align-items: center;
- }
- .profile img {
-    width: 20px;
-    height: 20px;
- }
-
-.dropdown button {
-    outline: none;
-    border: none;
-    background: none;
-    color: white;
-}
-
-.dropdown-content {
-    display: none;
-    position: absolute;
-    z-index: 2;
-    padding: 10px 0;
-    background-color: white;
-    width: 160px; /* Lebar dropdown mengikuti lebar tombol dropdown */
-    right: 0; /* Geser dropdown ke kiri */
-    border-radius: 0 0 20px 20px; 
-    animation: fadeInDrop 0.5s ease forwards;
-}
-
-@keyframes fadeInDrop {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-.dropdown-content ul {
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Pusatkan item dalam ul */
-    padding: 0; /* Hapus padding default ul */
-    list-style: none; /* Hapus bullet points */
-}
-
-.dropdown-content ul li {
-    margin: 0;
-}
-
-.dropdown-content ul li a {
-    color: #fd1d1d;
-    margin: 0;
-    text-decoration: none;
-    padding: 8px 0;
-    width: 100%; 
-    text-align: center; 
-}
-
-.dropdown-content ul li a:hover {
-    background-color: #fd1d1d;
-}
-.dropdown:hover .dropdown-content, .dropdown:focus .dropdown-content {
-    display: block;
 }
 .content {
    max-width: 100%;
@@ -196,8 +33,7 @@ body {
 }
 .jejeran {
     display: flex;
-    flex-wrap: wrap;
-    max-width: 90%;
+    max-width: 95%;
     gap: 3%;
     margin: auto;
 
@@ -205,7 +41,7 @@ body {
 a {
     text-decoration: none;
     border-radius: 10px;
-    max-width: 30%;
+    max-width: 50%;
 }
 .pilihan {
     padding: 6px;
@@ -215,8 +51,87 @@ a {
     transition: 0.5s ease-in-out;
     cursor: pointer;
     border-radius: 20px;
+    width: 100%;
+    height: 60%;
+    min-height: 60%;
+}
+.kiriPilihan {
+    width: 60%;
+}
+.kananPilihan {
+    width: 40%;
+    display: flex;
+    justify-content: flex-start;
+}
+.gambar-rumah-container {
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow-x: hidden;
+    width: 100%;
+    height: 95%;
+    border-radius: 8px;
+}
+.gambar-rumah-container::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+    display: none;
+}
+.gambar-rumah {
+    display: flex;
+    transition: transform 0.5s ease;
+    width: 100%;
+    border-radius: 8px;
+}
+.gambar-rumah::-webkit-scrollbar {
+    width: 0; /* Hilangkan scrollbar untuk browser berbasis WebKit */
+    height: 0;
+}
+.gambar-item {
+    flex: 0 0 100%;
+    width: 100%;
+    
+}
+.gambar-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+      object-position: center;
+    border-radius: 20px;
+}
+
+.navigation-dots {
+    display: flex;
+    justify-content: center;
     gap: 10px;
-   
+    margin-top: 10px;
+    position: relative;
+}
+.dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background-color: #dfdede;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.dot:hover {
+    background-color: #929292;
+}
+.navigation-dots .dot.active {
+    background-color: #929292;
+    transform: scale(1.2); /* Membesarkan dot aktif */
+    opacity: 1;
+}
+.navigation-dots span {
+    display: none; /* Sembunyikan semua dot terlebih dahulu */
+}
+.navigation-dots span:nth-child(-n+3) {
+    display: inline-block; /* Tampilkan hanya 3 dot pertama */
+}
+.dot.active {
+    background-color: #929292;
 }
 .pilihan:hover {
     background-color: #fd1d1d;
@@ -226,12 +141,7 @@ a {
 .pilihan:hover .isipilihan ul li p, .pilihan:hover h2, .pilihan:hover span {
     color: white;
 }
-.pilihan img {
-    width: 50%;
-   height: auto;
-    object-fit: cover;
-    border-radius: 20px;
-}
+
 .isipilihan {
    transition: 0.5s ease-in-out;
    margin: auto;
@@ -241,42 +151,45 @@ a {
    display: flex;
    align-items: center;
    gap: 5px;
+   text-align: center;
 }
 .logox .ruang img{
-    width: 20px;
-    height: 20px;
+    width: 25px;
+    height: 25px;
     transition: 0.5s ease-in-out;
 }
 .pilihan:hover .logox img {
     background-color: white;
+    border-radius: 8px;
    
 }
 .isipilihan ul li {
    list-style: none;
-   font-size: 10px;
+   font-size: 13px;
    color: #0f172a;
 }
 .isipilihan ul li ul li{
-   margin-bottom: 5px;
+   margin-bottom: 10%;
    
 }
 .isipilihan ul li P{
    color: #fd1d1d;
    transition: 0.5s ease-in-out;
+   margin-bottom: 0px;
 }
 
 .isipilihan ul li span {
-    font-size: 15px;
+    font-size: 18px;
     color: #0f172a;
     transition: 0.5s ease-in-out;
    }
 .isipilihan h2 {
-    font-size: 15px;
+    font-size: 18px;
     color: #0f172a;
     letter-spacing: 0.8px;
     transition: 0.5s ease-in-out;
     margin-bottom: 5px;
-    margin-top: 15px;
+   
 
 }
 .isipilihan button {
@@ -286,6 +199,8 @@ a {
     border-radius: 5px;
     padding: 5px;
     transition: 0.3s ease;
+    font-size: 18px;
+    margin-top: 5%;
 }
 .isipilihan button:hover {
     background-color: white;

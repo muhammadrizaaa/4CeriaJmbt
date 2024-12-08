@@ -65,7 +65,8 @@
             border: none;
             align-self: flex-start;
             transition: ease-in-out 0.4s;
-           color: #fd1d1d;
+            color: #fd1d1d;
+
         }
         .btn:hover {
         font-size: 14px;
@@ -148,7 +149,7 @@
         <h3 class="sambutan">Welcome, {{ $user->username }}</h3>
 
         <div class="atasboss">
-             <img src="{{asset('assets/davin.profile.jpg')}}" alt="" class="profile-image">   
+            <img src="{{asset('assets/davin.profile.jpg')}}" alt="" class="profile-image">   
             <div class="nameemail">
                 <h3 class="namanyadisini">{{ $user->username }}</h3>
                 <h3 class="emailinimah">{{ $user->email }}</h3>
@@ -158,7 +159,8 @@
     
             </div>
         </div>
-        <form action="{{ route('updateProfile') }}" method="POST">
+        <form action="{{ route('updateProfile', Auth::id()) }}" method="POST">
+            @method("PUT")
             @csrf
             <div class="container">
                 <div class="kelompok">
@@ -168,8 +170,11 @@
                                 <ul>
                                     <li>
                                         <h5>Username</h5>
-                                        <input type="text" id="username" name="update_name" value="{{ $user->username }}" disabled>
+                                        <input type="text" id="username" name="update_username" value="{{ $user->username }}" disabled>
                                     </li>
+                                    @foreach ($errors->all() as $error)
+                                        <h4>{{$error}}</h4>
+                                    @endforeach
                                     <li>
                                         <h5>Phone Number</h5>
                                         <input type="text" id="phone_number" name="update_pNumber" value="{{ $user->phone_number }}" disabled>
@@ -186,6 +191,10 @@
                             <div class="dataGPenting">
                                 <ul>
                                     <li>
+                                        <h5>Name</h5>
+                                        <input type="text" name="update_name" value="{{ $user->name }}" disabled>
+                                    </li>
+                                    <li>
                                         <h5>Email</h5>
                                         <input type="email" id="email" name="update_email" value="{{ $user->email }}" disabled>
                                     </li>
@@ -199,7 +208,7 @@
                     </div>
     
                     <div class="bawah">
-                        <input type="submit" value="Update Profile" class="btn">
+                        <input type="submit" value="Update Profile" class="btn" id="updateButton" style="display: none">
                     </div>
                 </div>
             </div>
@@ -241,45 +250,31 @@
         <div class="dalem">
             <div class="header">
                  <div class="isiHeader">
-                    <div class="kalimat">
-                        <h2><span>4C</span>reative, Compherensive</h2>
-                        <h1>And Cool <br>Construction</h1>
-                        <p> Menjadikan tempat untuk mempermudah mencari rumah di Indonesia</p>
-                    </div>
-                    <img src="" alt="">
-                </div>
-            </div>
-        </div>
-            <nav>
-                <ul>
-                    <li><a href="#isi">Tentang 4C</a></li>
-                    <li> <a href="#kisah">Awal mula</a></li>
-                    <li><a href="#kepemimpinan">Kepemimpinan</a></li>
-                </ul>
-    
-            </nav>
+                   
           <br>
           <br  id="isi">
-            <div class="isic">
-                <div class="isi" >
-                  <h2 data-aos="fade-up" data-aos-delay="50">
-                     Tentang 4C
-                  </h2>
+          <div class="isic">
+            <div class="isi" >
+                <div class="kiriinibos">
+                <div class="forc">
+              <h2 data-aos="fade-right" data-aos-delay="50">
+                 Tentang 4C
+              </h2>
+              <img data-aos="fade-right" data-aos-delay="50" src="Assets/Logo4C.png" alt="">
+              </div>
+              <p data-aos="fade-right" data-aos-delay="150">4C Adalah aplikasi dengan tema Konstruksi / Pembangunan dengan tujuan menjadi perantara pengguna umum untuk target penggunanya adalah pengguna Umum dan untuk fitur utamanya adalah  jual beli Rumah  </p>
+              </div>
+              <img class="fotot" src="Assets/4CTeam.jpg" data-aos="fade-right" data-aos-delay="200">
+             </div>
+
         
-                  <p data-aos="fade-up" data-aos-delay="100">4C Adalah aplikasi dengan tema Konstruksi / Pembangunan dengan tujuan menjadi perantara pengguna umum untuk target penggunanya adalah pengguna Umum dan untuk fitur utamanya adalah  jual beli Rumah  </p>
-                 </div>
-    
-                 <div class="logo" id="kisah">
-                    <img data-aos="fade-up" data-aos-delay="50" src="{{asset('assets/Logo4c.png')}}" alt="">
-                 </div>
-        
-        
-                <div class="kisah">
-                    <h2 data-aos="fade-up" data-aos-delay="50">Awal mula</h2>
-                    <p data-aos="fade-up" data-aos-delay="100">tujuan kami adalah membangun platform paling sederhana dan terpercaya untuk membantu mengurangi kerumitan kepemilikan properti dan membantu 99% pencari rumah menemukan jalan pulangnya masing-masing.
-                        Diluncurkan pada tahun 2021 oleh para pendiri yaitu Dapin, Riza, Pen, Dapa berbeda dari situs web pencarian properti lainnya dengan desainnya yang mudah digunakan; fitur seperti data analisis harga,
-                        perencana keuangan, filter cerdas, dan kemampuan untuk mencari berdasarkan peta atau waktu perjalanan. Fitur-fitur ini memastikan pembeli dan penyewa rumah mendapat tawaran terbaik yang berada <span id="kepemimpinan"></span>tepat di ujung jari mereka.</p>
-                </div>
+            <div class="kisah">
+                <div class="kiriinibos1">
+                <h2 data-aos="fade-right" data-aos-delay="50">Awal mula</h2>
+                <p data-aos="fade-right" data-aos-delay="150">Kami hadir untuk mempermudah kepemilikan properti dan membantu pencari rumah menemukan pilihan terbaik. Dengan fitur analisis harga, perencana keuangan, dan pencarian berbasis peta, kami memastikan segalanya mudah dan tepat.</p>
+                     </div>
+                     <img class="fotot" src="Assets/4CTeam.jpg" data-aos="fade-right" data-aos-delay="250">
+            </div>
         
                 <div class="kepemimpinan" >
                         <H1 data-aos="fade-up" data-aos-delay="50" class="Header"> Kepemimpinan </H1>
@@ -353,23 +348,104 @@
         </script>
     
     <script>
-        function enableEdit() {
-            document.querySelectorAll('input').forEach(input => input.disabled = false);
-            document.getElementById('editButton').innerText = "Cancel";
-            document.getElementById('editButton').onclick = cancelEdit;
+         function openTab(evt, tabName) {
+    const contents = document.querySelectorAll('.tab-content');
+    contents.forEach(content => content.classList.remove('active'));
+    const links = document.querySelectorAll('.tab-link');
+    links.forEach(link => link.classList.remove('active'));
+    document.getElementById(tabName).classList.add('active');
+    evt.currentTarget.classList.add('active');
+}
+
+    function openTab(evt, tabName) {
+        document.querySelectorAll('.tab-content').forEach(tab => {
+            tab.style.display = 'none';
+        });
+
+        document.getElementById(tabName).style.display = 'block';
+        document.querySelectorAll('.tab-link').forEach(btn => {
+            btn.classList.remove('active');
+        });
+
+        if (evt) {
+            evt.currentTarget.classList.add('active');
         }
-    
-        function cancelEdit() {
-            document.querySelectorAll('input').forEach(input => input.disabled = true);
-            document.getElementById('editButton').innerText = "Edit Profile";
-            document.getElementById('editButton').onclick = enableEdit;
+    }
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const tab = urlParams.get('tab'); 
+        if (tab) {
+            document.querySelector(`button[onclick="openTab(event, '${tab}')"]`).click();
+        } else {
+            document.querySelector('button[onclick="openTab(event, \'profile\')"]').click();
         }
-    
-        function confirmDelete(id) {
-            if (confirm('Hapus Rumah Ini?')) {
-                window.location.href = `/hapusRumah/${id}`;
+    });
+
+    document.addEventListener('scroll', () => {
+            const fireLine = document.getElementById('fireLine');
+            const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+            const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercentage = scrollTop / docHeight;
+            fireLine.style.height = `${scrollPercentage * 100}%`;
+
+            if (scrollPercentage > 0) {
+                fireLine.classList.add('active');
+            } else {
+                fireLine.classList.remove('active');
             }
-        }
+        });
+
+            function enableEdit() {
+                const editButton = document.getElementById('editButton');
+                const updateButton = document.getElementById('updateButton');
+                document.querySelectorAll('input[type="text"], input[type="password"], input[type="email"]').forEach(input => {
+                    input.disabled = false;
+                });
+                document.querySelectorAll('input').forEach(input => {
+                    input.style.border = "1px solid #ddd";
+                });
+                editButton.textContent = "Batalkan"
+                updateButton.style.display = "inline-block";
+
+                editButton.onclick = function() {
+                    cancelEdit();
+                };
+            }
+
+            function cancelEdit() {
+                const editButton = document.getElementById('editButton');
+                const updateButton = document.getElementById('updateButton');
+                document.querySelectorAll('input[type="text"], input[type="password"], input[type="email"]').forEach(input => {
+                    input.disabled = true;
+                });
+
+                document.querySelectorAll('input').forEach(input => {
+                    input.style.border = "none";
+                });
+                editButton.textContent = "Edit Profile";
+                updateButton.style.display = "none";
+                editButton.onclick = function() {
+                    enableEdit();
+                };
+            }                                                                   
+        // function enableEdit() {
+        //     document.querySelectorAll('input').forEach(input => input.disabled = false);
+        //     document.getElementById('editButton').innerText = "Cancel";
+        //     document.getElementById('editButton').onclick = cancelEdit;
+        // }
+    
+        // function cancelEdit() {
+        //     document.querySelectorAll('input').forEach(input => input.disabled = true);
+        //     document.getElementById('editButton').innerText = "Edit Profile";
+        //     document.getElementById('editButton').onclick = enableEdit;
+        // }
+    
+        // function confirmDelete(id) {
+        //     if (confirm('Hapus Rumah Ini?')) {
+        //         window.location.href = `/hapusRumah/${id}`;
+        //     }
+        // }
     </script>
 
 </body>

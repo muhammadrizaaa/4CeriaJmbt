@@ -5,14 +5,20 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\HomeController;
 
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/cariRumah', [HomeController::class, 'cariRumah'])->name('cariRumah');
+Route::get('/tambah_data_rumah', [HomeController::class, 'tambahDataRumah'])->name('tambahDataRumah');
+Route::get('/detail_rumah', [HomeController::class, 'detailRumah'])->name('detailRumah');
+Route::get('/logout', [HomeController::class, 'logout'])->name('logout');
 Route::get('/profil', [ProfilController::class, 'index'])->name('home');
-Route::get('/update-profile', [ProfilController::class, 'update'])->name('updateProfile');
+Route::put('/update-profile/{id}', [ProfilController::class, 'updateProfile'])->name('updateProfile');
 
 
-Route::get('/', function () {
-    return view('welcome');
-});
+// Route::get('/', function () {
+//     return view('welcome');
+// });
 
 Route::get('/dashboard', [HouseController::class, 'displayMap'])->middleware(['auth', 'verified'])->name('dashboard');
 
