@@ -75,6 +75,7 @@ body {
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-color: white;
 }
 .header {
    width: 100%;
@@ -516,6 +517,7 @@ body {
 .content {
     max-width: 100%;
     margin-bottom: 2%;
+    background-color: white;
 }
 
 .JR {
@@ -524,6 +526,7 @@ body {
     justify-content: center;
     align-items: center;
     margin-bottom: 4%;
+    background-color: white;
 }
 .JR .detail, .RK .detail {
     justify-content: center;
@@ -642,7 +645,8 @@ footer {
     color: #fff;
     padding: 100px 0 30px;
     border-top-left-radius: 125px;
-    font-size: 10px;
+    font-size: 10px; 
+    background-color: white;
    
 }
 .row {

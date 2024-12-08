@@ -249,7 +249,6 @@ nav li a:active {
 .kepemimpinan {
     margin-left: 6%;
     overflow: hidden;
-    width: 1000px;
     max-width: 100%;
     min-height: 1000px;
 
@@ -259,7 +258,7 @@ nav li a:active {
     justify-content: space-between;
     margin-top: 10%;
     text-align: center;
-    
+   
 }
 .kepemimpinan .PP img {
     width: 300px;
@@ -276,7 +275,7 @@ nav li a:active {
 .kepemimpinan .teks {
     float: left;
     margin-top: 10px;
-    width: 75%;
+    width: 45%;
     color: #fd1d1d99;
     font-weight: 300;
 }

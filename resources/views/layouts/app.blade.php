@@ -6,13 +6,9 @@
         <title>@yield('title', 'Home')</title>
         <link rel="stylesheet" href="{{ asset('css/beranda.css') }}">
         <link rel="stylesheet" href="{{ asset('js/beranda.js') }}">
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
 </head>
 <body>
     @yield('content')
-    <script>
-        AOS.init();
-    </script>
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
