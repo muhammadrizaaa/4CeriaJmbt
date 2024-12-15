@@ -6,6 +6,7 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\LocationController;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 Route::get('/cariRumah', [HomeController::class, 'cariRumah'])->name('cariRumah');
@@ -42,7 +43,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/house/detail/edit/{id}', [HouseController::class, 'formEditDetail'])->name('house.detail.edit.form');
     Route::put('/house/detail/edit/{id}', [HouseController::class, 'editDetail'])->name('house.detail.edit');
 
-    
+
     Route::get('/house_address_create/{id}', [HouseController::class, 'formCreateAddress'])->name('house.address.create.form');
     Route::post('/create_house_detail', [HouseController::class, 'createDetail'])->name('house.detail.create');
     Route::post('/create_house_address',[HouseController::class, 'createAddress'])->name('house.address.create');
@@ -51,7 +52,16 @@ Route::middleware('auth')->group(function () {
     Route::post('/create_house', [HouseController::class, 'createHouse'])->name('house.create');
     Route::post('/editHouse', [HouseController::class, 'editHouse'])->name('house.edit');
 
+
+    Route::get('/m', function () {
+        return view('users.map-form');
+    });
+
+    Route::post('/save-location', [LocationController::class, 'saveLocation'])->name('save.location');
 });
+
+Route::get('location-form', [LocationController::class, 'showForm'])->name('location.form');
+Route::post('store-location', [LocationController::class, 'storeLocation'])->name('location.store');
 
 
 require __DIR__.'/auth.php';
