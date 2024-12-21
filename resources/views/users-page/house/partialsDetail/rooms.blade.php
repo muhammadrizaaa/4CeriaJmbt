@@ -3,8 +3,9 @@
         <div class="px-4 py-1">
             <div class="px-4 py-2">
                 <h3 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">Rooms List</h3>
-                <div class="px-2 py-1 flex flex-row gap-4">
+                <div class="px-2 py-1 flex flex-row gap-4 justify-center">
                     <!-- Upload Form -->
+                    @if($isOwner)
                     <div class="flex flex-col w-1/4">
                         <form method="POST" action="{{ route('house.room.create') }}">
                             @csrf
@@ -56,6 +57,7 @@
                             @endif
                         </form>
                     </div>
+                    @endif
 
                     <div class="flex flex-col w-3/4">
                         <div class="bg-white dark:bg-gray-900 h-full rounded-lg overflow-y-auto">

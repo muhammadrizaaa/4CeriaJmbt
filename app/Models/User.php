@@ -52,4 +52,7 @@ class User extends Authenticatable
     public function house(){
         return $this->hasMany(House::class);
     }
+    public function phoneNumber(){
+        return $this->hasMany(PhoneNumber::class, 'id_user');
+    }
 }

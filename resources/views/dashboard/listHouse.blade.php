@@ -14,6 +14,10 @@
                                     </div>
                                     
                                     @else
+                                    <div class="dark:bg-black mb-2 grid w-full place-items-center h-48 overflow-hidden rounded-lg">
+                                        <img class="max-h-40 max-w-full object-contain" src="{{asset('storage/default/house/unavailable.png')}}" alt="">
+                                    </div>
+                                    
                                     @endif
                                     <p class="font-black text-xl text-gray-800 dark:text-gray-200 leading-tight">{{"RP. ".$items->price}}</p>
                                     @if($items->width == null || $items->length == null)

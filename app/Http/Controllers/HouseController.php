@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contact;
 use App\Models\DetailHouse;
 use App\Models\House;
 use App\Models\HouseAddress;
 use App\Models\HousePic;
+use App\Models\Provinces;
+use App\Models\Regions;
 use App\Models\Room;
 use App\Models\RoomPic;
 use DB;
@@ -19,18 +22,49 @@ class HouseController extends Controller
 {
 
     //view/calling data
-    public function dashboard(){
+    public function dashboard(Request $request){
         // $houseList = House::where('id_user', '!=', Auth::id())->get();
         $houseList = House::with(['housePic' => function ($query){
             $query->limit(1);
-        } ])->select("*", DB::raw('CAST(created_at AS DATE) as uploadDate'))->get();
+        } ])->select("*", DB::raw('CAST(created_at AS DATE) as uploadDate'));
+        if($request->has('province') && $request->province){
+            $houseList->where('province', $request->provinceIn);
+        }
+        if($request->has('city') && $request->city){
+            $houseList->where('kab_kota', $request->cityIn);
+        }
+        if($request->has('minPrice') && $request->minPrice){
+            $houseList->where('price', '>=', $request->minPrice);
+        }
+        if($request->has('maxPrice') && $request->maxPrice){
+            $houseList->where('price', '<=', $request->maxPrice);
+        }
+        $selectedProvince = $request->provinceIn;
+        $selected = [
+            $request->provinceIn,
+            $request->cityIn,
+            $request->minPrice,
+            $request->maxPrice
+        ];
+        $provinces = Provinces::all();
+        $regions = Regions::all();
+        $houseList = $houseList->get();
         // return $houseList;
-        return view('dashboard', compact('houseList'));
+        return view('dashboard', compact('houseList', 'provinces', 'regions', 'selectedProvince', 'selected'));
+    }
+    public function getRegion($provinceId){
+        $regions = Regions::where('id_province', $provinceId)->get();
+
+        return response()->json(['regions' => $regions]);
     }
     public function viewHouse($id){
+        $houseViews = House::find($id);
+        $houseViews->views = $houseViews->views + 1;
+        $houseViews->save();
         $house = House::with('housePic')->select("*", DB::raw('CAST(created_at AS DATE) as uploadDate'))->find($id);
+        $contacts = Contact::all();
         // return $house;
-        return view('users-page.house-view', compact('house'));
+        return view('users-page.house-view', compact('house', 'contacts'));
     }
     public function displayAll(){
         $houses = House::with('user')->get();
@@ -48,16 +82,20 @@ class HouseController extends Controller
 
         $house = House::with('housePic', 'room')->findOrFail($idHouse);
         $increment = 1;
-        if(Auth::id()==$house->id_user || Auth::user()->hasRole('admin')){
+        $isOwner = false;
+        if(Auth::id()==$house->id_user || !Auth::user()->hasRole('user')){
+            if(Auth::id()==$house->id_user){
+                $isOwner = true;
+            }
             // return $house;
-            return view('users-page.house.house-detail', compact('house', 'increment'));
+            return view('users-page.house.house-detail', compact('house', 'increment', 'isOwner'));
         }
         else{
             return redirect()->route('dashboard');
         }
         
     }
-    public function displayRoomDetail($id){
+    public function displayRoomDetail(House $house, $id){
         $room = Room::with('roomPic', 'house')->find($id);
         if (Auth::id()==$room->house->id_user) {
             // return $room;
@@ -204,12 +242,30 @@ class HouseController extends Controller
             'kab_kota' => ['required', 'string', 'max:255'],
             'postal_code' => ['required', 'numeric', 'max_digits:255'],
         ]);
+        if($request->kab_kota == "Jakarta"){
+            Regions::firstOrCreate([
+                'name' => $request->kab_kota,
+                'id_province' => 1
+            ]);
+        }
+        else{
+            $province = Provinces::firstOrCreate(['name' => $request->province]);
+            Regions::firstOrCreate([
+                'name' => $request->kab_kota,
+                'id_province' => $province->id
+            ]);
+        }
         $upAddress = House::find($id);
         $upAddress->street_name = $request->street_name;
         $upAddress->kelurahan = $request->kelurahan;
         $upAddress->kecamatan = $request->kecamatan;
         $upAddress->kab_kota = $request->kab_kota;
-        $upAddress->province = $request->province;
+        if($request->kab_kota == "Jakarta"){
+            $upAddress->province = "Jakarta";
+        }
+        else{
+            $upAddress->province = $request->province;
+        }
         $upAddress->postal_code = $request->postal_code;
         $upAddress->coordinate = $request->lat.",".$request->lng;
         $upAddress->save();

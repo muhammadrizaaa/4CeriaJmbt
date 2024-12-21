@@ -33,11 +33,12 @@
                         dark:focus:border-blue-500">{{$house->house_desc}}</textarea>
                     </div>
                 </div>
-                
+                @if(Auth::user()->can('house-delete')||$isOwner)
                 <button class="my-2 rounded-md border border-2 border-gray-600 py-2 px-4 ml-6 hover:bg-gray-600 dark:bg-gray-8 dark:hover:bg-gray-600
                                 text-gray-900 dark:text-white" type="submit">Edit</button>
                                 <button class="my-2 rounded-md border border-2 border-red-600 py-2 px-4 mx-2 hover:bg-gray-600 dark:bg-red-600 dark:hover:bg-red-800
                                 dark:hover:border-red-800 text-gray-900 dark:text-white" type="button" onclick="openDeleteHouseModal()">Delete House</button>
+                @endif
             </form>
         </div>
     </div>

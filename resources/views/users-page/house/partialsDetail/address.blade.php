@@ -42,15 +42,15 @@
                                 <h3 class="text-gray-800 dark:text-gray-200 whitespace-nowrap">Postal Code : </h3>
                                 <h3 class="text-gray-800 dark:text-gray-200 whitespace-nowrap">{{$house->postal_code}}</h3>
                             </div>
-                            <div class="py-4 justify-self-start">
-                                
+                            @if(Auth::user()->can('house-delete')||$isOwner)
+                                <div class="py-4 justify-self-start">
                                     <button class="py-2 px-4 rounded-md border border-2 text-white font-medium bg-blue-700 hover:bg-blue-800
                                     dark:bg-red-600 border-gray-800 dark:bg-red-600 dark:hover:bg-red-800 dark:border-red-600 dark:hover:border-red-800"
                                     onclick="openDeleteAddressModal('{{route('house.address.delete',$house->id)}}')">
                                         Delete
                                     </button>
-                                
-                            </div>
+                                </div>
+                            @endif
                         </div>
                         <div id="map" class="w-full h-80 max-w-screen-sm rounded-lg"></div>
                     </div>

@@ -1,7 +1,10 @@
 <?php
 
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\HouseController;
+use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 
@@ -10,24 +13,72 @@ Route::get('/', function () {
 });
 
 Route::get('/dashboard', [HouseController::class, 'dashboard'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard/getRegion/{provinceId}', [HouseController::class, 'getRegion'])->middleware(['auth', 'verified'])->name('dashboard-getRegions');
 
+//house
 Route::middleware(['permission:house-view'])->group(function(){
     Route::get('/houses_list', [HouseController::class, 'displayAll'])->name('houses-list');
 });
-Route::middleware(['permission:user-view|user-edit'])->group(function(){
-        //users
-        Route::get('/users_list', [UserController::class, 'display'])->name('users.list');
-        Route::get('/user_edit_form/{id}', [UserController::class, 'formEdit'])->name('user.edit.form');
-        Route::put('/user-edit/{id}', [UserController::class, 'editUser'])->name('user.edit');
+
+//users
+Route::middleware(['permission:user-view'])->group(function(){
+    Route::get('/users_list', [UserController::class, 'display'])->name('users.list');
+    Route::get('/user_edit_form/{id}', [UserController::class, 'formEdit'])->name('user.edit.form');
 });
+Route::middleware(['permission:user-edit'])->group(function(){
+    Route::put('/user-edit/{id}', [UserController::class, 'editUser'])->name('user.edit');
+});
+
+//roles
+Route::middleware(['permission:role-view'])->group(function(){
+    Route::get('/roles', [RoleController::class, 'index'])->name('role.list');
+    Route::get('/roles/view/{id}', [RoleController::class, 'view'])->name('role.view');
+});
+Route::middleware(['permission:role-create'])->group(function(){
+    Route::get('/roles/create', [RoleController::class, 'roleCreateForm'])->name('role.create.form');
+    Route::post('/roles/create/post', [RoleController::class, 'createRole'])->name('role.create');
+});
+Route::middleware(['permission:role-edit'])->group(function(){
+    Route::get('/roles/view/{id}', [RoleController::class, 'view'])->name('role.view');
+    Route::put('/role/edit/{id}', [RoleController::class, 'editRole'])->name('role.edit');
+});
+Route::middleware(['permission:role-delete'])->group(function(){
+    Route::delete('/role/delete/{id}', [RoleController::class, 'destroyRole'])->name('role.destroy');
+});
+
+//permissions
+Route::middleware(['permission:permission-view'])->group(function(){
+    Route::get('/permissions', [PermissionController::class, 'index'])->name('permissions.list');
+});
+
+Route::middleware(['permission:permission-create'])->group(function(){
+    Route::get('/permissions/create', [PermissionController::class, 'createPermissionForm'])->name('permission.create.form');
+    Route::post('/permissions/create/post', [PermissionController::class, 'createPermission'])->name('permission.create');
+});
+//contact
+Route::middleware(['permission:contact-view'])->group(function(){
+    Route::get('/contact', [ContactController::class, 'contactList'])->name('contact.list');
+});
+
+Route::middleware(['permission:contact-create'])->group(function(){
+    Route::get('/contact/create', [ContactController::class, 'contactCreateForm'])->name('contact.create.form');
+    Route::post('/contact/create/post', [ContactController::class, 'contactCreate'])->name('contact.create');
+});
+Route::middleware(['permission:contact-edit'])->group(function(){
+    Route::get('/contact/view/{id}', [ContactController::class, 'contactView'])->name('contact.view');
+    Route::put('/contact/edit/{id}', [ContactController::class, 'contactEdit'])->name('contact.edit');
+});
+
 
 Route::middleware('auth')->group(function () {
 
     Route::get('/house/view/{id}', [HouseController::class, 'viewHouse'])->name('house.view');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+    Route::post('/profile/add_phone_number', [ProfileController::class, 'addPhoneNumber'])->name('profile.addPhoneNumber');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::delete('/profile/delete_phone_number/{id}', [ProfileController::class, 'deletePhoneNumber'])->name('phoneNumber.destroy');
 
 
 
@@ -37,10 +88,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/create_house', [HouseController::class, 'createHouse'])->name('house.create');
     Route::get('/house_edit_form/{id}',[HouseController::class, 'formEditHouse'])->name('house.edit.form');
     Route::put('/house/edit/{id}', [HouseController::class, 'editHouse'])->name('house.edit');
-        //user
-        Route::get('/house/list', [HouseController::class, 'displayOwnedHouse'])->name('user-houses-list');
-        Route::delete('/house/delete/{id}', [HouseController::class, 'destroyHouse'])->name('user-house-delete');
-
+    Route::get('/house/list', [HouseController::class, 'displayOwnedHouse'])->name('user-houses-list');
+    Route::delete('/house/delete/{id}', [HouseController::class, 'destroyHouse'])->name('user-house-delete');
     Route::get('/detail_house/{id}', [HouseController::class, 'displayDetail'])->name('house.detail');
 
     Route::get('/create_house_detail_form/{id}', [HouseController::class, 'formCreateDimension'])->name('house.detail.dimension.create.form');
@@ -61,7 +110,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/house/pic/upload/{id}', [HouseController::class, 'createHousePic'])->name('house.pic.create');
     Route::delete('/house/pic/delete/{id}', [HouseController::class, 'destroyHousePic'])->name('house.pic.delete');
 
+
 });
 
 
 require __DIR__.'/auth.php';
+

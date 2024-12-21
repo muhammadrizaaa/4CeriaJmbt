@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\ProfileUpdateRequest;
+use App\Models\Contact;
+use App\Models\PhoneNumber;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -16,9 +19,9 @@ class ProfileController extends Controller
      */
     public function edit(Request $request): View
     {
-        return view('profile.edit', [
-            'user' => $request->user(),
-        ]);
+        $user = User::with('PhoneNumber')->find(Auth::id());
+        $contacts = Contact::all();
+        return view('profile.edit', compact('user', 'contacts'));
     }
 
     /**
@@ -56,5 +59,23 @@ class ProfileController extends Controller
         $request->session()->regenerateToken();
 
         return Redirect::to('/');
+    }
+
+    public function addPhoneNumber(Request $request){
+        $request->validate([
+            'phone_num'=>['string', 'max:15'],
+            'id_contact'=>['numeric']
+        ]);
+        PhoneNumber::create([
+            'contact'=>$request->phone_num,
+            'id_user'=>Auth::id(),
+            'id_contact'=>$request->id_contact
+        ]);
+        return Redirect::route('profile.edit')->with('status', 'Phone Number Added');
+    }
+    public function deletePhoneNumber($id){
+        $phone = PhoneNumber::find($id);
+        $phone->delete();
+        return Redirect::route('profile.edit')->with('status', 'Phone Number Deleted');
     }
 }

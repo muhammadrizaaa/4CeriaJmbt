@@ -16,16 +16,43 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('users.list')" :active="request()->routeIs('users.list')">
-                        {{ __('Users') }}
-                    </x-nav-link>
-                </div>
+                @can('user-view')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('users.list')" :active="request()->routeIs('users.list')">
+                            {{ __('Users') }}
+                        </x-nav-link>
+                    </div>
+                @endcan
+                @can('house-view')
                 <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('houses-list')" :active="request()->routeIs('houses-list')">
                         {{ __('Houses') }}
                     </x-nav-link>
                 </div>
+                @endcan
+                
+                @can('role-view')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                        <x-nav-link :href="route('role.list')" :active="request()->routeIs('role.list')">
+                            {{ __('Roles') }}
+                        </x-nav-link>
+                    </div>
+                @endcan
+
+                @can('permission-view')
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">   
+                        <x-nav-link :href="route('permissions.list')" :active="request()->routeIs('permissions.list')">
+                            {{ __('Permissions') }}
+                        </x-nav-link>
+                    </div>
+                @endcan
+                @can('contact-view')
+                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">   
+                    <x-nav-link :href="route('contact.list')" :active="request()->routeIs('contact.list')">
+                        {{ __('Contact') }}
+                    </x-nav-link>
+                </div>
+            @endcan
             </div>
 
             <!-- Settings Dropdown -->

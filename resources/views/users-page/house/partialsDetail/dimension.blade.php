@@ -6,7 +6,7 @@
             <div class="px-4 pt-2">
                 <h3 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">House Dimension</h3>
             </div>
-            @if($house->width==null && $house->length==null && $house->br==null && $house->ba==null && $house->floors==null )
+            @if($house->width==null && $house->length==null && $house->br==null && $house->ba==null && $house->floors==null)
             <div class="px-4 py-4">
                 <a href="{{route('house.detail.dimension.create.form',$house->id)}}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300
                 font-medium rounded-lg text-sm px-5 py-2.5 border border-gray-800 dark:border-gray-600 dark:bg-gray-600
@@ -63,9 +63,11 @@
                     <div class=" px-6 py-2">
                         <button class="py-2 px-4 rounded-md border border-2 border-gray-600 hover:bg-gray-600 dark:bg-gray-8 dark:hover:bg-gray-600
                         text-gray-900 dark:text-white" type="submit">Edit</button>
-                        <button class="mx-2 py-2 px-4 rounded-md border border-2 text-white font-medium bg-blue-700 hover:bg-blue-800
-                        dark:bg-red-600 border-gray-800 dark:bg-red-600 dark:hover:bg-red-800 dark:border-red-600 dark:hover:border-red-800"
-                        onclick="openDeleteDimensionModal()" type="button">Delete</button>
+                        @if(Auth::user()->can('house-delete')||$isOwner)
+                            <button class="mx-2 py-2 px-4 rounded-md border border-2 text-white font-medium bg-blue-700 hover:bg-blue-800
+                            dark:bg-red-600 border-gray-800 dark:bg-red-600 dark:hover:bg-red-800 dark:border-red-600 dark:hover:border-red-800"
+                            onclick="openDeleteDimensionModal()" type="button">Delete</button>
+                        @endif
                         @error('width')
                         <div class="text-red dark:text-red-600 mt-2">{{ $message }}</div>
                         @enderror
@@ -87,25 +89,25 @@
         </div>
     </div>
     <div id="deleteDimensionModal" class="fixed inset-0 bg-gray-900 bg-opacity-50 flex items-center justify-center z-50 hidden">
-    <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-80">
-        <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200 text-center">Confirm Delete</h2>
-        <p class="text-gray-600 dark:text-gray-400 text-sm text-center mt-2">
-            Are you sure you want to delete this item (ID: <span id="deleteItemId" class="font-bold"></span>)? This action cannot be undone.
-        </p>
-        <div class="mt-4 flex justify-center gap-4">
-            <button id="cancelDimensionButton" class="py-2 px-4 bg-gray-300 hover:bg-gray-400 text-gray-700 rounded-md">
-                Cancel
-            </button>
-            <form id="deleteDimensionForm" method="POST" action="{{route('house.detail.dimension.delete', $house->id)}}">
-                @csrf
-                @method('PUT')
-                <button type="submit" class="py-2 px-4 bg-red-600 hover:bg-red-700 text-white rounded-md">
-                    Delete
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6 w-80">
+            <h2 class="text-lg font-semibold text-gray-800 dark:text-gray-200 text-center">Confirm Delete</h2>
+            <p class="text-gray-600 dark:text-gray-400 text-sm text-center mt-2">
+                Are you sure you want to delete this item (ID: <span id="deleteItemId" class="font-bold"></span>)? This action cannot be undone.
+            </p>
+            <div class="mt-4 flex justify-center gap-4">
+                <button id="cancelDimensionButton" class="py-2 px-4 bg-gray-300 hover:bg-gray-400 text-gray-700 rounded-md">
+                    Cancel
                 </button>
-            </form>
+                <form id="deleteDimensionForm" method="POST" action="{{route('house.detail.dimension.delete', $house->id)}}">
+                    @csrf
+                    @method('PUT')
+                    <button type="submit" class="py-2 px-4 bg-red-600 hover:bg-red-700 text-white rounded-md">
+                        Delete
+                    </button>
+                </form>
+            </div>
         </div>
     </div>
-</div>
     <script>
         function submitDeleteDetail() {
             document.getElementById('deleteDetailForm').submit();

@@ -24,6 +24,7 @@ class House extends Model
         'kab_kota',
         'province',
         'postal_code',
+        'views',
         'id_user',
         
     ];

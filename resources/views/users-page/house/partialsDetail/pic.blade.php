@@ -3,8 +3,9 @@
         <div class="px-4 py-1">
             <div class="px-4 py-2">
                 <h3 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">House Pics</h3>
-                <div class="px-2 py-1 flex flex-row gap-4">
+                <div class="px-2 py-1 flex flex-row gap-4 justify-center">
                     <!-- Upload Form -->
+                    @if($isOwner)
                     <div class="flex flex-col w-1/4">
                         <form method="POST" action="{{ route('house.pic.create', $house->id) }}" enctype="multipart/form-data">
                             @csrf
@@ -32,6 +33,7 @@
                             @enderror
                         </form>
                     </div>
+                    @endif
 
                     <!-- House Pictures -->
                     <div class="flex flex-col w-3/4">
@@ -66,12 +68,13 @@
                                     </div>
                                     <div class="relative flex flex-col">
                                         <img class="w-full aspect-video object-cover rounded-lg" src="{{ asset('storage/'.$items->dir) }}" alt="">
-                                        
+                                        @if(Auth::user()->can('house-delete')||$isOwner)
                                         <button onclick="openDeletePicModal()" class="my-2 py-2 px-4 rounded-md border border-2 text-white font-medium bg-blue-700 hover:bg-blue-800
                                         dark:bg-red-600 border-gray-800 dark:hover:bg-red-800 dark:border-red-600 dark:hover:border-red-800
                                         justify-self-center">
                                             Delete
                                         </button>
+                                        @endif
                                     </div>
                                     @endforeach
                                 </div>

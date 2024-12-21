@@ -95,6 +95,7 @@
                 .then(data => {
                     const place = data.features[0]; // Get the most relevant location result
                     const placeName = place ? place.place_name : 'Unknown location';
+                    const kelurahanName = place.text;
                     const context = place.context || []; 
                     let street = '';
                     let neighborhood = '';
@@ -127,9 +128,9 @@
                         if (item.id.includes('country')) {
                             country = item.text;
                         }
-                    });
+                    }); 
                     document.getElementById('street-input').value = street;
-                    document.getElementById('neighborhood-input').value = neighborhood;
+                    document.getElementById('neighborhood-input').value = kelurahanName;
                     document.getElementById('locality-input').value = locality;
                     document.getElementById('lng-input').value = lng;
                     document.getElementById('lat-input').value = lat;

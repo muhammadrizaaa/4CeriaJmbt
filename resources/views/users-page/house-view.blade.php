@@ -24,8 +24,8 @@
                                     <p class="text-gray-400 text-sm">{{$items->desc}}</p>
                                 </div>
                                 <div class="flex-shrink-0">
-                                    <a class="py-2 px-4 rounded-md border border-gray-600 hover:bg-gray-700 text-gray-900 dark:text-white dark:border-gray-500 
-                                    dark:hover:bg-gray-500" href="{{route('house.room.detail',$items->id)}}">Detail</a>
+                                    {{-- <a class="py-2 px-4 rounded-md border border-gray-600 hover:bg-gray-700 text-gray-900 dark:text-white dark:border-gray-500 
+                                    dark:hover:bg-gray-500" href="{{route('house.room.detail',$items->id)}}">Detail</a> --}}
                                 </div>
                             </div>
                         </div>
