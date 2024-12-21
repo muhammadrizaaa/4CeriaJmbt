@@ -1,5 +1,5 @@
 1. import sql file nya ke phpmyadmin, etc. (klik new table, lalu import file sql nya).
-2. tambahkan atau ubah file env, di sini env nya bernama "env.example" ubah menjadi .env lalu masukkan ini
+2. tambahkan atau ubah file env, di sini env nya bernama "env.example" ubah menjadi ".env" lalu masukkan ini
    
 APP_NAME=Laravel
 APP_ENV=local
