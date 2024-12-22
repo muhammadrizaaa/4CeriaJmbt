@@ -97,7 +97,7 @@
                 <div class="toggle-panel toggle-left">
                     <h1>Daftar Akun</h1>
                     <p>Sudah Punya Akun?, Klik Tombol Dibawah Ini!</p>
-                    <button onclick="showToast()" class="hidden" id="login">Log-In</button>
+                    <button onclick="showToast()" class="hidden" id="loginBtn">Log-In</button>
                 </div>
                 <div class="toggle-panel toggle-right">
                     <h1>Selamat datang!</h1>
@@ -111,7 +111,7 @@
     <script>
     const container = document.getElementById('container');
     const registerBtn = document.getElementById('register');
-    const loginBtn = document.getElementById('login');
+    const loginBtn = document.getElementById('loginBtn');
 
     registerBtn.addEventListener('click', () => {
         container.classList.add("active");

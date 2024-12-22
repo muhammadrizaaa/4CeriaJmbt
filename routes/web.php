@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CariRumahController;
 use App\Http\Controllers\HouseController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -39,6 +40,8 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/create_house', [HouseController::class, 'createHouse'])->name('house.create');
     Route::post('/editHouse', [HouseController::class, 'editHouse'])->name('house.edit');
+
+    Route::get('/cari_rumah', [CariRumahController::class, 'index'])->name('cariRumah');
 
     
 });
