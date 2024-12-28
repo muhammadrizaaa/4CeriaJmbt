@@ -63,4 +63,4 @@ jobs:
           app-name: '4c-housing'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_2F91172006AA40D2A2F7990382717B63 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_015C95C960FE43809DB43D41005B510C }}
